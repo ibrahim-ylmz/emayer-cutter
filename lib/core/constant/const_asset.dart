@@ -29,4 +29,7 @@ final class AssetsConfirguration {
 
   //Help Screen Assets
   static String get help => 'assets/logo/mail.svg';
+  
+  //Splash Screen Assets
+  static String get splash => 'assets/splash/img_splash.jpg';
 }

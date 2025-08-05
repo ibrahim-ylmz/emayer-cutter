@@ -14,7 +14,6 @@ final GoRouter appRouter = GoRouter(
     ShellRoute(
       builder: (context, state, child) => HomeScreen(child: child),
       routes: [
-        // default page make dashboard
         GoRoute(path: AppRouterName.system, builder: (context, state) => const Scaffold(body: Center(child: Text('System')))),
         GoRoute(path: AppRouterName.stream, builder: (context, state) => const Scaffold(body: Center(child: Text('Stream')))),
         GoRoute(path: AppRouterName.help, builder: (context, state) => const Scaffold(body: Center(child: Text('Help')))),
