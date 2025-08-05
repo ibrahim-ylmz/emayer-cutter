@@ -3,7 +3,6 @@ import 'package:emayer_cutter/core/design/size_extensions.dart';
 import 'package:emayer_cutter/feature/home/widgets/system_button.dart';
 import 'package:emayer_cutter/feature/system/system_notifier.dart';
 import 'package:emayer_cutter/feature/system/system_screen_mixin.dart';
-import 'package:emayer_cutter/feature/system/widgets/system_icon.dart';
 import 'package:emayer_cutter/feature/system/widgets/system_info.dart';
 import 'package:emayer_cutter/feature/system/widgets/system_status.dart';
 import 'package:flutter/material.dart';
@@ -28,16 +27,16 @@ class _SystemScreenState extends State<SystemScreen> with SystemScreenMixin {
           top: 16.h,
           left: 27.w,
         ),
-        child: Row(
+        child: Column(
           children: [
             Expanded(
-              flex: 2,
-              child: Column(
+              flex: 4,
+              child: Row  (
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Expanded(
-                    flex: 3,
+                    
                     child: Container(
                       padding: EdgeInsets.only(bottom: 10.h),
                       decoration: BoxDecoration(
@@ -189,7 +188,7 @@ class _SystemScreenState extends State<SystemScreen> with SystemScreenMixin {
                   ),
                   SizedBox(height: 10.h),
                   Expanded(
-                    flex: 4,
+                   
                     child: StatusContainer(
                       isPowerOn: context.watch<SystemNotifier>().isPowerOn,
                       sensor1Text: 'Sensor 1',
@@ -278,12 +277,11 @@ class _SystemScreenState extends State<SystemScreen> with SystemScreenMixin {
                           0,
                     ),
                   ),
-                  SizedBox(height: screenWidth * 0.01),
                 ],
               ),
             ),
             Expanded(
-              flex: 3,
+              flex: 2,
               child: Column(
                 children: [
                   Expanded(
