@@ -10,8 +10,8 @@ class DrawerUpButton extends StatelessWidget {
     required this.onPressed,
     this.isStreaming = false,
     this.isStreamingOk = false,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final bool isEnable;
   final String title;
@@ -25,9 +25,7 @@ class DrawerUpButton extends StatelessWidget {
     Duration duration = Durations.long4;
 
     return Padding(
-      padding: EdgeInsets.only(
-        bottom: 18.h,
-      ),
+      padding: EdgeInsets.only(bottom: 18.h),
       child: InkWell(
         borderRadius: BorderRadius.circular(55),
         onTap: onPressed,
@@ -100,8 +98,7 @@ class DrawerUpButton extends StatelessWidget {
                               : Colors.red[700],
                         ),
                         child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 6.w),
+                          padding: EdgeInsets.symmetric(horizontal: 6.w),
                           child: Row(
                             children: [
                               Container(
@@ -112,8 +109,7 @@ class DrawerUpButton extends StatelessWidget {
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    EdgeInsets.only(left: 4.w),
+                                padding: EdgeInsets.only(left: 4.w),
                                 child: Text(
                                   isStreamingOk ? "Online" : "Offline",
                                   style: TextStyle(

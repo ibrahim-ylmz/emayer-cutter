@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:emayer_cutter/core/design/size_extensions.dart';
 
 class DrawerInfo extends StatelessWidget {
-  const DrawerInfo({Key? key}) : super(key: key);
+  const DrawerInfo({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -55,9 +55,7 @@ class DrawerInfo extends StatelessWidget {
             ),
           );
         } else {
-          return SizedBox(
-            height: 85.h,
-          );
+          return SizedBox(height: 85.h);
         }
       },
     );

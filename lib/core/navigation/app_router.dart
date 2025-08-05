@@ -1,4 +1,6 @@
+import 'package:emayer_cutter/feature/help/help_screen.dart';
 import 'package:emayer_cutter/feature/home/home_screen.dart';
+import 'package:emayer_cutter/feature/lock/lock_screen.dart';
 import 'package:emayer_cutter/feature/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -16,8 +18,8 @@ final GoRouter appRouter = GoRouter(
       routes: [
         GoRoute(path: AppRouterName.system, builder: (context, state) => const Scaffold(body: Center(child: Text('System')))),
         GoRoute(path: AppRouterName.stream, builder: (context, state) => const Scaffold(body: Center(child: Text('Stream')))),
-        GoRoute(path: AppRouterName.help, builder: (context, state) => const Scaffold(body: Center(child: Text('Help')))),
-        GoRoute(path: AppRouterName.lock, builder: (context, state) => const Scaffold(body: Center(child: Text('Lock')))),
+        GoRoute(path: AppRouterName.help, builder: (context, state) => const HelpScreen()),
+        GoRoute(path: AppRouterName.lock, builder: (context, state) => const LockScreen()),
       ],
     ),
   ],
