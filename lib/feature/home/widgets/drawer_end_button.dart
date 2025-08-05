@@ -26,7 +26,7 @@ class _DrawerEndButtonState extends State<DrawerEndButton> {
         builder: (context, constraints) {
           final double buttonWidth = constraints.maxWidth;
           return SizedBox(
-            height: 32.h,
+            height: 38.h,
             width: double.infinity,
             child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -34,18 +34,18 @@ class _DrawerEndButtonState extends State<DrawerEndButton> {
                 children: [
                   SvgPicture.asset(
                     widget.svgIcon ?? "Null",
-                    height: 14.s,
+                    height: 18.s,
                   ),
-                  buttonWidth > 151.w
+                  buttonWidth > 180.w
                       ? Padding(
                           padding: EdgeInsets.only(
-                            left: 29.w,
+                            left: 35.w,
                           ),
                           child: Text(
                             widget.title ?? "Null",
                             style: TextStyle(
                               color: const Color.fromRGBO(255, 255, 255, 0.8),
-                              fontSize: 9.sp,
+                              fontSize: 12.sp,
                             ),
                           ),
                         )

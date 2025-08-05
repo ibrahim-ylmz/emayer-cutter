@@ -9,7 +9,7 @@ class DrawerInfo extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         final double drawerWidth = constraints.maxWidth;
-        if (drawerWidth > 140.w) {
+        if (drawerWidth > 170.w) {
           return Padding(
             padding: const EdgeInsets.only(bottom: 25),
             child: Column(
@@ -24,7 +24,7 @@ class DrawerInfo extends StatelessWidget {
                     letterSpacing: 1,
                     color: const Color.fromRGBO(255, 255, 255, 1),
                     fontWeight: FontWeight.w600,
-                    fontSize: 16.sp,
+                    fontSize: 20.sp,
                   ),
                 ),
                 RichText(
@@ -37,7 +37,7 @@ class DrawerInfo extends StatelessWidget {
                       color: const Color.fromRGBO(255, 255, 255, 1),
                       fontWeight: FontWeight.w600,
                       height: 1.8,
-                      fontSize: 8.sp,
+                      fontSize: 10.sp,
                     ),
                     children: [
                       TextSpan(
@@ -45,7 +45,7 @@ class DrawerInfo extends StatelessWidget {
                         style: TextStyle(
                           fontWeight: FontWeight.w400,
                           color: const Color.fromRGBO(255, 255, 255, 1),
-                          fontSize: 8.sp,
+                          fontSize: 10.sp,
                         ),
                       ),
                     ],
@@ -56,7 +56,7 @@ class DrawerInfo extends StatelessWidget {
           );
         } else {
           return SizedBox(
-            height: 71.h,
+            height: 85.h,
           );
         }
       },

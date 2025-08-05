@@ -29,7 +29,7 @@ class _TopBarState extends State<TopBar> {
       color: Theme.of(context).colorScheme.onSecondary,
       child: Padding(
         padding: EdgeInsets.only(
-          left: 27.w,
+          left: 32.w,
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -42,7 +42,7 @@ class _TopBarState extends State<TopBar> {
                     homeNotifier.toggleSidebar();
                   },
                   child: SvgPicture.asset(
-                    height: 26.s,
+                    height: 32.s,
                     AssetsConfirguration.hamburgerMenu,
                     colorFilter: ColorFilter.mode(
                       Theme.of(context).colorScheme.onError,
@@ -52,14 +52,14 @@ class _TopBarState extends State<TopBar> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(
-                    left: 22.w,
+                    left: 26.w,
                   ),
                   child: Text(
                     widget.title!,
                     style: TextStyle(
                       fontFamily: 'Roboto',
                       color: Theme.of(context).colorScheme.onError,
-                      fontSize: 16.sp,
+                      fontSize: 20.sp,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -74,7 +74,7 @@ class _TopBarState extends State<TopBar> {
                 PageTitle.system)
               Padding(
                 padding: EdgeInsets.only(
-                  right: 28.w,
+                  right: 34.w,
                 ),
                 child: SystemButton(
                   activeText: 'Light',
@@ -83,7 +83,7 @@ class _TopBarState extends State<TopBar> {
                   activeToggleColor: const Color.fromRGBO(241, 241, 241, 1),
                   activeIcon: Icon(
                     color: const Color.fromRGBO(125, 126, 127, 1),
-                    size: 16.s,
+                    size: 20.s,
                     Icons.wb_sunny_outlined,
                   ),
                   inactiveText: 'Dark',
@@ -92,8 +92,8 @@ class _TopBarState extends State<TopBar> {
                   inactiveToggleColor: const Color.fromRGBO(23, 23, 23, 1),
                   inactiveIcon: SvgPicture.asset(
                     AssetsConfirguration.systemLightOff,
-                    height: 16.s,
-                    width: 16.s,
+                    height: 20.s,
+                    width: 20.s,
                   ),
                   value: themeChanger.isLightMode,
                   onToggle: (val) {
