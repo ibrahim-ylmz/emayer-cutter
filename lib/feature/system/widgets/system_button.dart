@@ -1,11 +1,9 @@
-library flutter_switch;
-
-import 'package:emayer_cutter/core/design/size_extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:emayer_cutter/core/design/size_extensions.dart';
 
 class SystemButton extends StatefulWidget {
   const SystemButton({
-    Key? key,
+    super.key,
     required this.value,
     required this.onToggle,
     this.title,
@@ -28,7 +26,7 @@ class SystemButton extends StatefulWidget {
     this.duration = const Duration(milliseconds: 200),
     this.disabled = false,
     this.textSize,
-  }) : super(key: key);
+  });
 
   final bool value;
   final ValueChanged<bool> onToggle;
@@ -110,9 +108,9 @@ class _FlutterSwitchState extends State<SystemButton>
       toggleColor = widget.inactiveToggleColor ?? widget.toggleColor;
     }
 
-    double textSpace = (widget.width ?? 56.w) -
-        (widget.toggleSize ?? 19.w) -
-        3;
+    double textSpace = (widget.width ?? 100.w) -
+        (widget.toggleSize ?? 35.w) -
+        4;
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -121,7 +119,7 @@ class _FlutterSwitchState extends State<SystemButton>
         Text(widget.title ?? "",
             style: TextStyle(
               fontFamily: 'Roboto',
-              fontSize: 15.sp,
+              fontSize: 20.sp,
               color: Theme.of(context).colorScheme.onError,
               fontWeight: FontWeight.w100,
               // color: widget.value
@@ -148,12 +146,12 @@ class _FlutterSwitchState extends State<SystemButton>
                 child: Opacity(
                   opacity: widget.disabled ? 0.6 : 1,
                   child: Container(
-                    width: widget.width ?? 73.w,
-                    height: widget.height ?? 33.h,
+                    width: widget.width ?? 120.w,
+                    height: widget.height ?? 50.h,
                     padding: EdgeInsets.all(widget.padding),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(
-                        widget.borderRadius ?? 16.r,
+                        widget.borderRadius ?? 20.r,
                       ),
                       // color: switchColor,
                       color: Theme.of(context).colorScheme.secondaryContainer,
@@ -166,7 +164,7 @@ class _FlutterSwitchState extends State<SystemButton>
                           child: Container(
                             width: textSpace,
                             padding: EdgeInsets.symmetric(
-                              horizontal: 2.w,
+                              horizontal: 3.w,
                             ),
                             alignment: Alignment.center,
                             child: _activeText,
@@ -191,9 +189,9 @@ class _FlutterSwitchState extends State<SystemButton>
                           alignment: _toggleAnimation.value,
                           child: AnimatedContainer(
                               duration: widget.duration,
-                              width: widget.toggleSize ?? 27.w,
-                              height: widget.toggleSize ?? 27.w,
-                              padding: EdgeInsets.all(2.w),
+                              width: widget.toggleSize ?? 42.w,
+                              height: widget.toggleSize ?? 42.w,
+                              padding: EdgeInsets.all(3.w),
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: toggleColor,
@@ -223,7 +221,7 @@ class _FlutterSwitchState extends State<SystemButton>
         // color: const Color.fromRGBO(147, 147, 147, 1),
         color: Theme.of(context).colorScheme.tertiary,
         fontFamily: 'Roboto',
-        fontSize: widget.textSize ?? 8.sp,
+        fontSize: widget.textSize ?? 14.sp,
       ),
     );
   }
@@ -234,7 +232,7 @@ class _FlutterSwitchState extends State<SystemButton>
       style: TextStyle(
         color: Theme.of(context).colorScheme.tertiary,
         fontFamily: 'Roboto',
-        fontSize: widget.textSize ?? 8.sp,
+        fontSize: widget.textSize ?? 14.sp,
       ),
     );
   }

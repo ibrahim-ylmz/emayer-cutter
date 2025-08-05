@@ -69,10 +69,10 @@ class _StatusContainerState extends State<StatusContainer> {
           ),
           Padding(
             padding: EdgeInsets.only(
-              top: 10.h,
-              left: 18.w,
-              right: 18.w,
-              bottom: 11.h,
+              top: 12.h,
+              left: 22.w,
+              right: 22.w,
+              bottom: 14.h,
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -94,10 +94,10 @@ class _StatusContainerState extends State<StatusContainer> {
           const Dvider(),
           Padding(
             padding: EdgeInsets.only(
-              top: 7.h,
-              left: 18.w,
-              right: 18.w,
-              bottom: 11.h,
+              top: 9.h,
+              left: 22.w,
+              right: 22.w,
+              bottom: 14.h,
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -119,10 +119,10 @@ class _StatusContainerState extends State<StatusContainer> {
           const Dvider(),
           Padding(
             padding: EdgeInsets.only(
-              top: 7.h,
-              left: 18.w,
-              right: 18.w,
-              bottom: 11.h,
+              top: 9.h,
+              left: 22.w,
+              right: 22.w,
+              bottom: 14.h,
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -201,9 +201,9 @@ class _InfoState extends State<Info> {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-        right: 18.w,
-        top: 5.h,
-        bottom: 5.h,
+        right: 22.w,
+        top: 7.h,
+        bottom: 7.h,
       ),
       child: Row(
         children: [
@@ -212,7 +212,7 @@ class _InfoState extends State<Info> {
                   child: Text(widget.title,
                       style: TextStyle(
                           color: Theme.of(context).colorScheme.onError,
-                          fontSize: 12.sp,
+                          fontSize: 14.sp,
                           fontFamily: 'Roboto',
                           fontWeight: FontWeight.w300,
                           letterSpacing: 0.5)))),
@@ -220,7 +220,7 @@ class _InfoState extends State<Info> {
               child: Row(
             children: [
               IconButton(
-                iconSize: 24.s,
+                iconSize: 28.s,
                 style: ButtonStyle(
                   shape: MaterialStateProperty.all(const CircleBorder()),
                   backgroundColor: widget.isPowerOn
@@ -241,7 +241,7 @@ class _InfoState extends State<Info> {
                       : TextEditingController(text: '0'),
                   style: TextStyle(
                       color: Theme.of(context).colorScheme.onError,
-                      fontSize: 11.sp,
+                      fontSize: 13.sp,
                       fontFamily: 'Roboto',
                       fontWeight: FontWeight.w300,
                       letterSpacing: 0.5),
@@ -257,7 +257,7 @@ class _InfoState extends State<Info> {
                 ),
               ),
               IconButton(
-                iconSize: 24.s,
+                iconSize: 28.s,
                 style: ButtonStyle(
                   shape: MaterialStateProperty.all(const CircleBorder()),
                   backgroundColor: widget.isPowerOn
@@ -289,15 +289,15 @@ class TopTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-        top: 13.h,
-        left: 24.w,
-        right: 28.w,
+        top: 16.h,
+        left: 28.w,
+        right: 32.w,
       ),
       child: Row(
         children: [
           CircleAvatar(
             backgroundColor: Theme.of(context).colorScheme.onError,
-            maxRadius: 2.r,
+            maxRadius: 3.r,
           ),
           const SizedBox(
             width: 7,
@@ -306,7 +306,7 @@ class TopTitle extends StatelessWidget {
             title,
             style: TextStyle(
               fontFamily: 'Roboto',
-              fontSize: 15.sp,
+              fontSize: 18.sp,
               color: Theme.of(context).colorScheme.onError,
               fontWeight: FontWeight.w500,
               letterSpacing: 0.5,
@@ -338,22 +338,22 @@ class SystemStatusState extends State<SystemStatus> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: 76.w,
-        height: 58.h,
+        width: 90.w,
+        height: 65.h,
         decoration: BoxDecoration(
           color: widget.isPowerOn
               ? widget.status!
                   ? const Color.fromRGBO(0, 187, 97, 1)
                   : const Color.fromRGBO(242, 61, 61, 1)
               : Colors.grey,
-          borderRadius: BorderRadius.circular(5.r),
+          borderRadius: BorderRadius.circular(8.r),
         ),
         child: Center(
           child: Text(
             widget.title!,
             style: TextStyle(
               color: Colors.white,
-              fontSize: 10.sp,
+              fontSize: 12.sp,
               fontFamily: 'Roboto',
               fontWeight: FontWeight.w700,
               letterSpacing: 0.5,

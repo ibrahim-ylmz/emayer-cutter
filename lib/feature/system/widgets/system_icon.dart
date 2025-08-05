@@ -19,9 +19,9 @@ class SystemIcon extends StatelessWidget {
       onTap: () => onTap(!isActive),
       child: AnimatedContainer(
           duration: const Duration(milliseconds: 300),
-          width: 35.w,
-          height: 35.w,
-          padding: const EdgeInsets.all(4.0),
+          width: 45.w,
+          height: 45.w,
+          padding: const EdgeInsets.all(6.0),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: isActive
@@ -35,8 +35,8 @@ class SystemIcon extends StatelessWidget {
               color: isActive
                   ? Colors.white
                   : const Color.fromRGBO(119, 119, 119, 1),
-              height: 24.s,
-              width: 24.s,
+              height: 30.s,
+              width: 30.s,
             ),
           )),
     );

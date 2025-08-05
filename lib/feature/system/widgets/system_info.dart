@@ -32,7 +32,7 @@ class _SystemInfoState extends State<SystemInfo> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 205.w,
+      width: 240.w,
       height: double.infinity,
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.primaryContainer,
@@ -49,15 +49,15 @@ class _SystemInfoState extends State<SystemInfo> {
         children: [
           Padding(
             padding: EdgeInsets.only(
-              top: 11.h,
-              left: 22.w,
-              bottom: 6.h,
+              top: 14.h,
+              left: 26.w,
+              bottom: 8.h,
             ),
             child: Row(
               children: [
                 Container(
-                  width: 4.w,
-                  height: 4.w,
+                  width: 6.w,
+                  height: 6.w,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: Theme.of(context).colorScheme.onError,
@@ -65,13 +65,13 @@ class _SystemInfoState extends State<SystemInfo> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(
-                    left: 4.w,
+                    left: 6.w,
                   ),
                   child: Text(
                     widget.title,
                     style: TextStyle(
                       fontFamily: 'Roboto',
-                      fontSize: 16.sp,
+                      fontSize: 18.sp,
                       color: Theme.of(context).colorScheme.onError,
                       fontWeight: FontWeight.w500,
                       letterSpacing: 0.5,
@@ -114,10 +114,10 @@ class _InfoItemState extends State<InfoItem> {
       children: [
         Padding(
           padding: EdgeInsets.only(
-            left: 30.w,
-            right: 30.w,
-            bottom: 15.h,
-            top: 15.h,
+            left: 35.w,
+            right: 35.w,
+            bottom: 18.h,
+            top: 18.h,
           ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -129,7 +129,7 @@ class _InfoItemState extends State<InfoItem> {
                 child: Text(widget.valueText,
                     style: TextStyle(
                         color: Theme.of(context).colorScheme.onError,
-                        fontSize: 8.sp,
+                        fontSize: 11.sp,
                         fontFamily: 'Roboto',
                         fontWeight: FontWeight.w300,
                         letterSpacing: 0.5)),
@@ -140,7 +140,7 @@ class _InfoItemState extends State<InfoItem> {
                 child: Text(widget.value,
                     style: TextStyle(
                         color: Theme.of(context).colorScheme.onError,
-                        fontSize: 8.sp,
+                        fontSize: 11.sp,
                         fontFamily: 'Roboto',
                         fontWeight: FontWeight.w300,
                         letterSpacing: 0.5)),
@@ -152,8 +152,8 @@ class _InfoItemState extends State<InfoItem> {
             ? Container()
             : Padding(
                 padding: EdgeInsets.only(
-                  left: 13.w,
-                  right: 13.w,
+                  left: 16.w,
+                  right: 16.w,
                 ),
                 child: Divider(
                     height: 1, color: Theme.of(context).colorScheme.secondary),
