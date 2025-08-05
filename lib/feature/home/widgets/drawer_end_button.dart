@@ -36,7 +36,7 @@ class _DrawerEndButtonState extends State<DrawerEndButton> {
                     widget.svgIcon ?? "Null",
                     height: 18.s,
                   ),
-                  buttonWidth > 180.w
+                  buttonWidth > 220.w
                       ? Padding(
                           padding: EdgeInsets.only(
                             left: 35.w,

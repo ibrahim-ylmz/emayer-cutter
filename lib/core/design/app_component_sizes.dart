@@ -5,8 +5,8 @@ class AppComponentSizes {
   AppComponentSizes._();
 
   // Sidebar dimensions optimized for portrait width (increased)
-  static double get sidebarCollapsedWidth => 90.w;
-  static double get sidebarExpandedWidth => 230.w;
+  static double get sidebarCollapsedWidth => 100.w;
+  static double get sidebarExpandedWidth => 280.w;
   
   // Top bar height (increased)
   static double get topBarHeight => 76.h;

@@ -9,7 +9,7 @@ class DrawerInfo extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         final double drawerWidth = constraints.maxWidth;
-        if (drawerWidth > 170.w) {
+        if (drawerWidth > 210.w) {
           return Padding(
             padding: const EdgeInsets.only(bottom: 25),
             child: Column(
