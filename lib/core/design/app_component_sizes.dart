@@ -5,11 +5,11 @@ class AppComponentSizes {
   AppComponentSizes._();
 
   // Sidebar dimensions optimized for portrait width (increased)
-  static double get sidebarCollapsedWidth => 100.w;
-  static double get sidebarExpandedWidth => 280.w;
+  static double get sidebarCollapsedWidth => 90.w;
+  static double get sidebarExpandedWidth => 240.w;
   
   // Top bar height (increased)
-  static double get topBarHeight => 76.h;
+  static double get topBarHeight => 80.h;
   
   // Button sizes (increased)
   static double get buttonHeight => 56.h;
@@ -19,7 +19,7 @@ class AppComponentSizes {
   // Icon sizes (increased)
   static double get smallIcon => 20.s;
   static double get mediumIcon => 28.s;
-  static double get largeIcon => 38.s;
+  static double get largeIcon => 36.s;
   
   // Font sizes optimized for portrait (increased)
   static double get titleFontSize => 28.sp;

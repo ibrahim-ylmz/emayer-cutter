@@ -65,13 +65,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     final double imageWidth = constraints.maxWidth;
                     return Padding(
                       padding: EdgeInsets.only(
-                        top: 32.h,
-                        bottom: 36.h,
-                        left: (imageWidth > 15.w) ? 15.w : 0,
-                        right: (imageWidth > 15.w) ? 15.w : 0,
+                        top: 30.h,
+                        bottom: 40.h,
+                        left: (imageWidth > 12.w) ? 12.w : 0,
+                        right: (imageWidth > 12.w) ? 12.w : 0,
                       ),
                       child: SvgPicture.asset(
-                        height: 38.h,
+                        height: 36.h,
                         AssetsConfirguration.drawerLogo,
                       ),
                     );
@@ -79,8 +79,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(
-                    right: 24.w,
-                    left: 24.w,
+                    right: 20.w,
+                    left: 20.w,
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -130,8 +130,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(
-                    right: 24.w,
-                    left: 24.w,
+                    right: 20.w,
+                    left: 20.w,
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -152,7 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                       ),
                       Padding(
-                        padding: EdgeInsets.only(top: 68.h),
+                        padding: EdgeInsets.only(top: 70.h),
                         child: const DrawerInfo(),
                       ),
                     ],

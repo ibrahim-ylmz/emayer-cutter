@@ -38,22 +38,21 @@ class DrawerUpButton extends StatelessWidget {
               duration: duration,
               curve: Curves.easeOut,
               width: double.infinity,
-              height: 48.h,
+              height: 46.h,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(55),
-                color: (isEnable && buttonWidth > 220.w)
+                color: (isEnable && buttonWidth > 180.w)
                     ? const Color.fromRGBO(255, 255, 255, 0.21)
                     : Colors.transparent,
               ),
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 6.w),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    // Icon container
-                    Container(
-                      width: 40.w,
-                      height: 40.w,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Flexible(
+                    child: AnimatedContainer(
+                      width: 44.w,
+                      duration: duration,
+                      curve: Curves.easeOut,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: isEnable
@@ -63,7 +62,7 @@ class DrawerUpButton extends StatelessWidget {
                       child: Center(
                         child: SvgPicture.asset(
                           svgIcon,
-                          height: 16.s,
+                          height: 18.s,
                           // ignore: deprecated_member_use
                           color: isEnable
                               ? const Color.fromRGBO(23, 23, 23, 1)
@@ -71,71 +70,65 @@ class DrawerUpButton extends StatelessWidget {
                         ),
                       ),
                     ),
-                    // Text and badge container
-                    if (buttonWidth > 220.w)
-                      Expanded(
+                  ),
+                  buttonWidth > 180.w
+                      ? Padding(
+                          padding: EdgeInsets.only(left: 18.w),
+                          child: Center(
+                            child: Text(
+                              title,
+                              style: TextStyle(
+                                fontFamily: "Roboto",
+                                color: isEnable
+                                    ? const Color.fromRGBO(255, 255, 255, 1)
+                                    : const Color.fromRGBO(255, 255, 255, 0.8),
+                                fontSize: 14.sp,
+                              ),
+                            ),
+                          ),
+                        )
+                      : Container(),
+                  if (buttonWidth > 180.w && isStreaming)
+                    Padding(
+                      padding: EdgeInsets.only(left: 6.w),
+                      child: Container(
+                        height: 20.h,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(23),
+                          color: isStreamingOk
+                              ? const Color.fromRGBO(33, 184, 42, 1)
+                              : Colors.red[700],
+                        ),
                         child: Padding(
-                          padding: EdgeInsets.only(left: 10.w, right: 4.w),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 6.w),
                           child: Row(
                             children: [
-                              // Title text
-                              Flexible(
-                                child: Text(
-                                  title,
-                                  style: TextStyle(
-                                    fontFamily: "Roboto",
-                                    color: isEnable
-                                        ? const Color.fromRGBO(255, 255, 255, 1)
-                                        : const Color.fromRGBO(255, 255, 255, 0.8),
-                                    fontSize: 13.sp,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
+                              Container(
+                                width: 4.w,
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.white,
                                 ),
                               ),
-                              // Online/Offline badge
-                              if (isStreaming)
-                                Container(
-                                  margin: EdgeInsets.only(left: 6.w),
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 6.w,
-                                    vertical: 3.h,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: isStreamingOk
-                                        ? const Color.fromRGBO(33, 184, 42, 1)
-                                        : Colors.red[700],
-                                  ),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Container(
-                                        width: 3.w,
-                                        height: 3.w,
-                                        decoration: const BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                      SizedBox(width: 3.w),
-                                      Text(
-                                        isStreamingOk ? "Online" : "Offline",
-                                        style: TextStyle(
-                                          fontFamily: "Roboto",
-                                          color: Colors.white,
-                                          fontSize: 9.sp,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                    ],
+                              Padding(
+                                padding:
+                                    EdgeInsets.only(left: 4.w),
+                                child: Text(
+                                  isStreamingOk ? "Online" : "Offline",
+                                  style: TextStyle(
+                                    fontFamily: "Roboto",
+                                    color: Colors.white,
+                                    fontSize: 11.sp,
                                   ),
                                 ),
+                              ),
                             ],
                           ),
                         ),
                       ),
-                  ],
-                ),
+                    ),
+                ],
               ),
             );
           },

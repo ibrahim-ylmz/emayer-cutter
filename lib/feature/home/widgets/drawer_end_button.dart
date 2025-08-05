@@ -26,7 +26,7 @@ class _DrawerEndButtonState extends State<DrawerEndButton> {
         builder: (context, constraints) {
           final double buttonWidth = constraints.maxWidth;
           return SizedBox(
-            height: 38.h,
+            height: 40.h,
             width: double.infinity,
             child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -36,7 +36,7 @@ class _DrawerEndButtonState extends State<DrawerEndButton> {
                     widget.svgIcon ?? "Null",
                     height: 18.s,
                   ),
-                  buttonWidth > 220.w
+                  buttonWidth > 180.w
                       ? Padding(
                           padding: EdgeInsets.only(
                             left: 35.w,
