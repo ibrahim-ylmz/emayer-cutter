@@ -10,7 +10,6 @@ import 'package:emayer_cutter/feature/home/widgets/drawer_up_button.dart';
 import 'package:emayer_cutter/feature/home/widgets/top_bar.dart';
 import 'package:emayer_cutter/feature/lock/lock_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -71,9 +70,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         left: (imageWidth > 12.w) ? 12.w : 0,
                         right: (imageWidth > 12.w) ? 12.w : 0,
                       ),
-                      child: SvgPicture.asset(
-                        height: 36.h,
-                        AssetsConfirguration.drawerLogo,
+                      child: Image.asset(
+                        AssetsConfirguration.splash,
+                        height: 200.h,
+                        fit: BoxFit.contain,
                       ),
                     );
                   },
