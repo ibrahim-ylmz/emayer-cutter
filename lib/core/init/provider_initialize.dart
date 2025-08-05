@@ -1,4 +1,5 @@
 import 'package:emayer_cutter/feature/home/home_notifier.dart';
+import 'package:emayer_cutter/feature/system/system_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:emayer_cutter/core/notifiers/theme_notifier.dart';
@@ -17,6 +18,9 @@ class ProviderInitialize extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => HomeNotifier(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => SystemNotifier(),
         ),
       ],
       child: child,

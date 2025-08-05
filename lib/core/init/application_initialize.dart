@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:emayer_cutter/core/service/api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -9,6 +10,7 @@ final class ApplicationInitialize {
   Future<void> init() async {
     WidgetsFlutterBinding.ensureInitialized();
     await windowManager.ensureInitialized();
+    ApiService().initialize();
     await runZonedGuarded<Future<void>>(_initialize, (error, stack) {});
   }
 
