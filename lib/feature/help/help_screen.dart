@@ -11,15 +11,15 @@ class HelpScreen extends StatelessWidget {
       backgroundColor: Theme.of(context).primaryColor,
       body: Padding(
         padding: EdgeInsets.only(
-          left: 60.w,
-          top: 50.h,
-          bottom: 50.h,
-          right: 60.w,
+          left: 50.w,
+          top: 40.h,
+          bottom: 40.h,
+          right: 50.w,
         ),
         child: Column(
           children: [
             Container(
-              width: 340.w,
+              width: 300.w,
               decoration: BoxDecoration(
                 color: const Color.fromRGBO(255, 255, 255, 1),
                 borderRadius: BorderRadius.circular(AppComponentSizes.largeRadius * 2),
@@ -33,22 +33,22 @@ class HelpScreen extends StatelessWidget {
               ),
               child: Padding(
                 padding: EdgeInsets.only(
-                  left: AppComponentSizes.extraLargeSpacing,
-                  top: AppComponentSizes.extraLargeSpacing,
-                  right: AppComponentSizes.extraLargeSpacing,
-                  bottom: AppComponentSizes.extraLargeSpacing,
+                  left: AppComponentSizes.largeSpacing,
+                  top: AppComponentSizes.largeSpacing,
+                  right: AppComponentSizes.largeSpacing,
+                  bottom: AppComponentSizes.largeSpacing,
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(bottom: 18.h),
+                      padding: EdgeInsets.only(bottom: 15.h),
                       child: Text(
                         'Contact Information',
                         style: TextStyle(
                           fontFamily: 'Roboto',
-                          fontSize: AppComponentSizes.bodyFontSize,
+                          fontSize: 14.sp,
                           fontWeight: FontWeight.w400,
                           color: const Color.fromRGBO(105, 109, 110, 1),
                         ),
@@ -58,8 +58,8 @@ class HelpScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          width: 40.w,
-                          height: 40.w,
+                          width: 32.w,
+                          height: 32.w,
                           decoration: BoxDecoration(
                             gradient: const LinearGradient(
                               colors: [
@@ -69,15 +69,15 @@ class HelpScreen extends StatelessWidget {
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter,
                             ),
-                            borderRadius: BorderRadius.circular(AppComponentSizes.mediumRadius),
+                            borderRadius: BorderRadius.circular(8.r),
                           ),
                           child: Icon(
                             Icons.email_rounded,
-                            size: AppComponentSizes.mediumIcon,
+                            size: 20.s,
                             color: const Color.fromRGBO(255, 255, 255, 1),
                           ),
                         ),
-                        SizedBox(width: 18.w),
+                        SizedBox(width: 14.w),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -94,7 +94,7 @@ class HelpScreen extends StatelessWidget {
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                         fontFamily: 'Roboto',
-                                        fontSize: AppComponentSizes.subtitleFontSize,
+                                        fontSize: 16.sp,
                                         color: const Color.fromRGBO(65, 77, 85, 1),
                                         fontWeight: FontWeight.w700,
                                       ),
@@ -106,7 +106,7 @@ class HelpScreen extends StatelessWidget {
                                 '24/7 Support',
                                 style: TextStyle(
                                   fontFamily: 'Roboto',
-                                  fontSize: AppComponentSizes.captionFontSize,
+                                  fontSize: 11.sp,
                                   fontWeight: FontWeight.w400,
                                   color: const Color.fromRGBO(105, 109, 110, 1),
                                 ),
@@ -118,13 +118,13 @@ class HelpScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 16.h),
+                    SizedBox(height: 12.h),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          width: 40.w,
-                          height: 40.w,
+                          width: 32.w,
+                          height: 32.w,
                           decoration: BoxDecoration(
                             gradient: const LinearGradient(
                               colors: [
@@ -134,20 +134,20 @@ class HelpScreen extends StatelessWidget {
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter,
                             ),
-                            borderRadius: BorderRadius.circular(AppComponentSizes.mediumRadius),
+                            borderRadius: BorderRadius.circular(8.r),
                           ),
                           child: Center(
                             child: Text(
                               'phone',
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: AppComponentSizes.captionFontSize,
+                                fontSize: 10.sp,
                                 fontFamily: 'Roboto',
                               ),
                             ),
                           ),
                         ),
-                        SizedBox(width: 18.w),
+                        SizedBox(width: 14.w),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -164,7 +164,7 @@ class HelpScreen extends StatelessWidget {
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                         fontFamily: 'Roboto',
-                                        fontSize: AppComponentSizes.subtitleFontSize,
+                                        fontSize: 16.sp,
                                         color: const Color.fromRGBO(65, 77, 85, 1),
                                         fontWeight: FontWeight.w700,
                                       ),
@@ -176,7 +176,7 @@ class HelpScreen extends StatelessWidget {
                                 '24/7 Support',
                                 style: TextStyle(
                                   fontFamily: 'Roboto',
-                                  fontSize: AppComponentSizes.captionFontSize,
+                                  fontSize: 11.sp,
                                   fontWeight: FontWeight.w400,
                                   color: const Color.fromRGBO(105, 109, 110, 1),
                                 ),
