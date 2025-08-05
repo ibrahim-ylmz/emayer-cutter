@@ -1,9 +1,6 @@
 import 'dart:async';
-
-import 'package:emayer_cutter/core/constant/const_asset.dart';
 import 'package:emayer_cutter/core/design/size_extensions.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 class LockScreen extends StatefulWidget {
   final VoidCallback? onDismiss;
@@ -12,7 +9,6 @@ class LockScreen extends StatefulWidget {
   @override
   State<LockScreen> createState() => _LockScreenState();
 
-  // Static method to show lock screen as overlay
   static void show(BuildContext context) {
     showDialog(
       context: context,
@@ -94,11 +90,15 @@ class _LockScreenState extends State<LockScreen> {
             ),
           ),
           child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SvgPicture.asset(AssetsConfirguration.splash, height: 70.h),
-              ],
+            child: Text(
+              'Emayer',
+              style: TextStyle(
+                color: Colors.white.withValues(alpha: 0.9),
+                fontSize: 64.sp,
+                fontFamily: 'Roboto',
+                fontWeight: FontWeight.w100,
+                letterSpacing: 6.0,
+              ),
             ),
           ),
         ),
