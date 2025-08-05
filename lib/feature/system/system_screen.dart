@@ -31,7 +31,7 @@ class _SystemScreenState extends State<SystemScreen> with SystemScreenMixin {
         child: Row(
           children: [
             Expanded(
-              flex: 1,
+              flex: 2,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -169,13 +169,12 @@ class _SystemScreenState extends State<SystemScreen> with SystemScreenMixin {
                             child: SystemButton(
                               title: 'Lights',
                               inactiveIcon: SvgPicture.asset(
-                                height:
-                                    MediaQuery.of(context).size.width * 0.015,
+                                height: 16.h,
                                 AssetsConfirguration.systemLightOff,
                               ),
                               activeIcon: Icon(
                                 color: Colors.white,
-                                size: MediaQuery.of(context).size.width * 0.015,
+                                size: 16.s,
                                 Icons.wb_sunny_outlined,
                               ),
                               value: context.watch<SystemNotifier>().isLightsOn,
@@ -188,7 +187,7 @@ class _SystemScreenState extends State<SystemScreen> with SystemScreenMixin {
                       ),
                     ),
                   ),
-                  SizedBox(height: screenWidth * 0.01),
+                  SizedBox(height: 10.h),
                   Expanded(
                     flex: 4,
                     child: StatusContainer(
@@ -289,47 +288,7 @@ class _SystemScreenState extends State<SystemScreen> with SystemScreenMixin {
                 children: [
                   Expanded(
                     flex: 10,
-                    child: Stack(
-                      children: [
-                        Positioned(
-                          top: 43.h,
-                          left: 140.w,
-                          child: SystemIcon(
-                            isActive: context
-                                .watch<SystemNotifier>()
-                                .isLightsOn,
-                            svgIconPath: AssetsConfirguration.idea,
-                            onTap: context
-                                .read<SystemNotifier>()
-                                .sendLightsOnRequest,
-                          ),
-                        ),
-                        Positioned(
-                          bottom: 13.h,
-                          right: 263.w,
-                          child: SystemIcon(
-                            isActive: context
-                                .watch<SystemNotifier>()
-                                .isVacuumOn,
-                            svgIconPath: AssetsConfirguration.systemVacuumOn,
-                            onTap: context
-                                .read<SystemNotifier>()
-                                .sendVacuumOnRequest,
-                          ),
-                        ),
-                        Positioned(
-                          top: screenWidth * 0.04,
-                          right: screenWidth * 0.13,
-                          child: SystemIcon(
-                            isActive: context.watch<SystemNotifier>().isPowerOn,
-                            svgIconPath: AssetsConfirguration.systemRight,
-                            onTap: context
-                                .read<SystemNotifier>()
-                                .sendPowerOnRequest,
-                          ),
-                        ),
-                      ],
-                    ),
+                    child: Placeholder()
                   ),
                   Expanded(
                     flex: 4,
