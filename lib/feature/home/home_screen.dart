@@ -8,6 +8,7 @@ import 'package:emayer_cutter/feature/home/widgets/drawer_end_button.dart';
 import 'package:emayer_cutter/feature/home/widgets/drawer_info.dart';
 import 'package:emayer_cutter/feature/home/widgets/drawer_up_button.dart';
 import 'package:emayer_cutter/feature/home/widgets/top_bar.dart';
+import 'package:emayer_cutter/feature/lock/lock_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
@@ -148,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         title: 'Lock',
                         svgIcon: AssetsConfirguration.drawerLock,
                         onPressed: () {
-                          appRouter.go(AppRouterName.lock);
+                          LockScreen.show(context);
                         },
                       ),
                       Padding(

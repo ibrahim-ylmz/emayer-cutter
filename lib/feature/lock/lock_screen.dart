@@ -6,10 +6,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class LockScreen extends StatefulWidget {
-  const LockScreen({super.key});
+  final VoidCallback? onDismiss;
+  const LockScreen({super.key, this.onDismiss});
 
   @override
   State<LockScreen> createState() => _LockScreenState();
+
+  // Static method to show lock screen as overlay
+  static void show(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      barrierColor: Colors.transparent,
+      builder: (context) => LockScreen(
+        onDismiss: () => Navigator.of(context).pop(),
+      ),
+    );
+  }
 }
 
 class _LockScreenState extends State<LockScreen> {
@@ -57,10 +70,13 @@ class _LockScreenState extends State<LockScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: GestureDetector(
+    return Material(
+      color: Colors.transparent,
+      child: GestureDetector(
         onTap: () {
-          Navigator.of(context).pop();
+          if (widget.onDismiss != null) {
+            widget.onDismiss!();
+          }
         },
         child: AnimatedContainer(
           duration: const Duration(seconds: 3),
@@ -82,16 +98,6 @@ class _LockScreenState extends State<LockScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SvgPicture.asset(AssetsConfirguration.splash, height: 70.h),
-                SizedBox(height: 30.h),
-                Text(
-                  'Tap to unlock',
-                  style: TextStyle(
-                    color: Colors.white.withValues(alpha: 0.8),
-                    fontSize: 18.sp,
-                    fontFamily: 'Roboto',
-                    fontWeight: FontWeight.w300,
-                  ),
-                ),
               ],
             ),
           ),
