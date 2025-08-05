@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:emayer_cutter/core/constant/const_asset.dart';
 import 'package:emayer_cutter/core/design/size_extensions.dart';
 import 'package:flutter/material.dart';
 
@@ -14,9 +15,8 @@ class LockScreen extends StatefulWidget {
       context: context,
       barrierDismissible: false,
       barrierColor: Colors.transparent,
-      builder: (context) => LockScreen(
-        onDismiss: () => Navigator.of(context).pop(),
-      ),
+      builder: (context) =>
+          LockScreen(onDismiss: () => Navigator.of(context).pop()),
     );
   }
 }
@@ -90,15 +90,10 @@ class _LockScreenState extends State<LockScreen> {
             ),
           ),
           child: Center(
-            child: Text(
-              'Emayer',
-              style: TextStyle(
-                color: Colors.white.withValues(alpha: 0.9),
-                fontSize: 64.sp,
-                fontFamily: 'Roboto',
-                fontWeight: FontWeight.w100,
-                letterSpacing: 6.0,
-              ),
+            child: Image.asset(
+              AssetsConfirguration.splash,
+              height: 300.h,
+              fit: BoxFit.contain,
             ),
           ),
         ),

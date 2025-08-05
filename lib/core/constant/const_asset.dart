@@ -31,5 +31,5 @@ final class AssetsConfirguration {
   static String get help => 'assets/logo/mail.svg';
   
   //Splash Screen Assets
-  static String get splash => 'assets/splash/img_splash.jpg';
+  static String get splash => 'assets/splash/img_splash.png';
 }

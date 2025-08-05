@@ -72,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       child: Image.asset(
                         AssetsConfirguration.splash,
-                        height: 200.h,
+                        height: 120.h,
                         fit: BoxFit.contain,
                       ),
                     );
