@@ -1,4 +1,5 @@
 import 'package:emayer_cutter/core/constant/const_asset.dart';
+import 'package:emayer_cutter/core/design/size_extensions.dart';
 import 'package:emayer_cutter/feature/home/widgets/system_button.dart';
 import 'package:emayer_cutter/feature/system/system_notifier.dart';
 import 'package:emayer_cutter/feature/system/system_screen_mixin.dart';
@@ -24,8 +25,8 @@ class _SystemScreenState extends State<SystemScreen> with SystemScreenMixin {
       backgroundColor: Theme.of(context).primaryColor,
       body: Padding(
         padding: EdgeInsets.only(
-          top: screenWidth * 0.015,
-          left: screenWidth * 0.025,
+          top: 16.h,
+          left: 27.w,
         ),
         child: Row(
           children: [
@@ -38,10 +39,10 @@ class _SystemScreenState extends State<SystemScreen> with SystemScreenMixin {
                   Expanded(
                     flex: 3,
                     child: Container(
-                      padding: EdgeInsets.only(bottom: screenWidth * 0.01),
+                      padding: EdgeInsets.only(bottom: 10.h),
                       decoration: BoxDecoration(
                         color: Theme.of(context).colorScheme.primaryContainer,
-                        borderRadius: BorderRadius.circular(30),
+                        borderRadius: BorderRadius.circular(30.r),
                         boxShadow: const [
                           BoxShadow(
                             color: Color.fromRGBO(0, 0, 0, 0.25),
@@ -56,14 +57,14 @@ class _SystemScreenState extends State<SystemScreen> with SystemScreenMixin {
                         children: [
                           Padding(
                             padding: EdgeInsets.only(
-                              top: screenWidth * 0.011,
-                              left: screenWidth * 0.0194,
+                              top: 12.h,
+                              left: 21.w,
                             ),
                             child: Row(
                               children: [
                                 Container(
-                                  width: screenWidth * 0.004,
-                                  height: screenWidth * 0.004,
+                                  width: 4.w,
+                                  height: 4.w,
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     color: Theme.of(
@@ -73,14 +74,13 @@ class _SystemScreenState extends State<SystemScreen> with SystemScreenMixin {
                                 ),
                                 Padding(
                                   padding: EdgeInsets.only(
-                                    left: screenWidth * 0.004,
+                                    left: 4.w,
                                   ),
                                   child: Text(
                                     'Control',
                                     style: TextStyle(
                                       fontFamily: 'Roboto',
-                                      // fontSize: 24,
-                                      fontSize: screenWidth * 0.014,
+                                      fontSize: 15.sp,
                                       color: Theme.of(
                                         context,
                                       ).colorScheme.onError,
@@ -94,20 +94,20 @@ class _SystemScreenState extends State<SystemScreen> with SystemScreenMixin {
                           ),
                           Padding(
                             padding: EdgeInsets.only(
-                              top: screenWidth * 0.007,
-                              left: screenWidth * 0.0255,
-                              right: screenWidth * 0.0255,
-                              bottom: screenWidth * 0.0026,
+                              top: 7.h,
+                              left: 27.w,
+                              right: 27.w,
+                              bottom: 3.h,
                             ),
                             child: SystemButton(
                               title: 'Power',
                               inactiveIcon: Icon(
                                 color: Colors.white,
-                                size: MediaQuery.of(context).size.width * 0.015,
+                                size: 16.s,
                                 Icons.power_settings_new_rounded,
                               ),
                               activeIcon: SvgPicture.asset(
-                                height: screenWidth * 0.01,
+                                height: 10.h,
                                 AssetsConfirguration.systemPowerOn,
                               ),
                               value: context.watch<SystemNotifier>().isPowerOn,
@@ -118,9 +118,9 @@ class _SystemScreenState extends State<SystemScreen> with SystemScreenMixin {
                           ),
                           Padding(
                             padding: EdgeInsets.only(
-                              left: screenWidth * 0.0117,
-                              right: screenWidth * 0.0117,
-                              bottom: screenWidth * 0.0026,
+                              left: 12.w,
+                              right: 12.w,
+                              bottom: 3.h,
                             ),
                             child: Divider(
                               height: 1,
@@ -129,20 +129,18 @@ class _SystemScreenState extends State<SystemScreen> with SystemScreenMixin {
                           ),
                           Padding(
                             padding: EdgeInsets.only(
-                              left: screenWidth * 0.0255,
-                              right: screenWidth * 0.0255,
-                              bottom: screenWidth * 0.0026,
+                              left: 27.w,
+                              right: 27.w,
+                              bottom: 3.h,
                             ),
                             child: SystemButton(
                               title: 'Vacuum',
                               inactiveIcon: SvgPicture.asset(
-                                height:
-                                    MediaQuery.of(context).size.width * 0.015,
+                                height: 16.h,
                                 AssetsConfirguration.systemVacuumOff,
                               ),
                               activeIcon: SvgPicture.asset(
-                                height:
-                                    MediaQuery.of(context).size.width * 0.017,
+                                height: 18.h,
                                 AssetsConfirguration.systemVacuumOn,
                               ),
                               value: context.watch<SystemNotifier>().isVacuumOn,
@@ -153,9 +151,9 @@ class _SystemScreenState extends State<SystemScreen> with SystemScreenMixin {
                           ),
                           Padding(
                             padding: EdgeInsets.only(
-                              left: screenWidth * 0.0117,
-                              right: screenWidth * 0.0117,
-                              bottom: screenWidth * 0.0026,
+                              left: 12.w,
+                              right: 12.w,
+                              bottom: 3.h,
                             ),
                             child: Divider(
                               height: 1,
@@ -164,9 +162,9 @@ class _SystemScreenState extends State<SystemScreen> with SystemScreenMixin {
                           ),
                           Padding(
                             padding: EdgeInsets.only(
-                              left: screenWidth * 0.0255,
-                              right: screenWidth * 0.0255,
-                              bottom: screenWidth * 0.0026,
+                              left: 27.w,
+                              right: 27.w,
+                              bottom: 3.h,
                             ),
                             child: SystemButton(
                               title: 'Lights',
@@ -294,8 +292,8 @@ class _SystemScreenState extends State<SystemScreen> with SystemScreenMixin {
                     child: Stack(
                       children: [
                         Positioned(
-                          top: screenWidth * 0.04,
-                          left: screenWidth * 0.13,
+                          top: 43.h,
+                          left: 140.w,
                           child: SystemIcon(
                             isActive: context
                                 .watch<SystemNotifier>()
@@ -307,8 +305,8 @@ class _SystemScreenState extends State<SystemScreen> with SystemScreenMixin {
                           ),
                         ),
                         Positioned(
-                          bottom: screenWidth * 0.0125,
-                          right: screenWidth * 0.244,
+                          bottom: 13.h,
+                          right: 263.w,
                           child: SystemIcon(
                             isActive: context
                                 .watch<SystemNotifier>()
