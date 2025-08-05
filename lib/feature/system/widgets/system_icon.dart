@@ -1,3 +1,4 @@
+import 'package:emayer_cutter/core/design/size_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -14,13 +15,12 @@ class SystemIcon extends StatelessWidget {
   final ValueChanged<bool> onTap;
   @override
   Widget build(BuildContext context) {
-    final double screenWidth = MediaQuery.of(context).size.width;
     return GestureDetector(
       onTap: () => onTap(!isActive),
       child: AnimatedContainer(
           duration: const Duration(milliseconds: 300),
-          width: screenWidth * 0.032,
-          height: screenWidth * 0.032,
+          width: 35.w,
+          height: 35.w,
           padding: const EdgeInsets.all(4.0),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
@@ -35,10 +35,8 @@ class SystemIcon extends StatelessWidget {
               color: isActive
                   ? Colors.white
                   : const Color.fromRGBO(119, 119, 119, 1),
-              // height: 36,
-              height: screenWidth * 0.022,
-              // width: 36,
-              width: screenWidth * 0.022,
+              height: 24.s,
+              width: 24.s,
             ),
           )),
     );

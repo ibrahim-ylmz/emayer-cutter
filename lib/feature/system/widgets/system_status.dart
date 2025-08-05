@@ -1,4 +1,5 @@
 import 'package:emayer_cutter/core/component/base_container.dart';
+import 'package:emayer_cutter/core/design/size_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -58,8 +59,6 @@ class StatusContainer extends StatefulWidget {
 class _StatusContainerState extends State<StatusContainer> {
   @override
   Widget build(BuildContext context) {
-    final double screenWidth = MediaQuery.of(context).size.width;
-
     return BaseContainer(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,10 +69,10 @@ class _StatusContainerState extends State<StatusContainer> {
           ),
           Padding(
             padding: EdgeInsets.only(
-              top: screenWidth * 0.009,
-              left: screenWidth * 0.017,
-              right: screenWidth * 0.017,
-              bottom: screenWidth * 0.01,
+              top: 10.h,
+              left: 18.w,
+              right: 18.w,
+              bottom: 11.h,
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,10 +94,10 @@ class _StatusContainerState extends State<StatusContainer> {
           const Dvider(),
           Padding(
             padding: EdgeInsets.only(
-              top: screenWidth * 0.0068,
-              left: screenWidth * 0.017,
-              right: screenWidth * 0.017,
-              bottom: screenWidth * 0.01,
+              top: 7.h,
+              left: 18.w,
+              right: 18.w,
+              bottom: 11.h,
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -120,10 +119,10 @@ class _StatusContainerState extends State<StatusContainer> {
           const Dvider(),
           Padding(
             padding: EdgeInsets.only(
-              top: screenWidth * 0.0068,
-              left: screenWidth * 0.017,
-              right: screenWidth * 0.017,
-              bottom: screenWidth * 0.01,
+              top: 7.h,
+              left: 18.w,
+              right: 18.w,
+              bottom: 11.h,
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -200,13 +199,11 @@ class Info extends StatefulWidget {
 class _InfoState extends State<Info> {
   @override
   Widget build(BuildContext context) {
-    final double screenWidth = MediaQuery.of(context).size.width;
-
     return Padding(
       padding: EdgeInsets.only(
-        right: screenWidth * 0.017,
-        top: screenWidth * 0.005,
-        bottom: screenWidth * 0.005,
+        right: 18.w,
+        top: 5.h,
+        bottom: 5.h,
       ),
       child: Row(
         children: [
@@ -215,7 +212,7 @@ class _InfoState extends State<Info> {
                   child: Text(widget.title,
                       style: TextStyle(
                           color: Theme.of(context).colorScheme.onError,
-                          fontSize: MediaQuery.of(context).size.width * 0.011,
+                          fontSize: 12.sp,
                           fontFamily: 'Roboto',
                           fontWeight: FontWeight.w300,
                           letterSpacing: 0.5)))),
@@ -223,7 +220,7 @@ class _InfoState extends State<Info> {
               child: Row(
             children: [
               IconButton(
-                iconSize: MediaQuery.of(context).size.width * 0.022,
+                iconSize: 24.s,
                 style: ButtonStyle(
                   shape: MaterialStateProperty.all(const CircleBorder()),
                   backgroundColor: widget.isPowerOn
@@ -244,7 +241,7 @@ class _InfoState extends State<Info> {
                       : TextEditingController(text: '0'),
                   style: TextStyle(
                       color: Theme.of(context).colorScheme.onError,
-                      fontSize: MediaQuery.of(context).size.width * 0.01,
+                      fontSize: 11.sp,
                       fontFamily: 'Roboto',
                       fontWeight: FontWeight.w300,
                       letterSpacing: 0.5),
@@ -260,7 +257,7 @@ class _InfoState extends State<Info> {
                 ),
               ),
               IconButton(
-                iconSize: MediaQuery.of(context).size.width * 0.022,
+                iconSize: 24.s,
                 style: ButtonStyle(
                   shape: MaterialStateProperty.all(const CircleBorder()),
                   backgroundColor: widget.isPowerOn
@@ -290,19 +287,17 @@ class TopTitle extends StatelessWidget {
   final String title;
   @override
   Widget build(BuildContext context) {
-    final double screenWidth = MediaQuery.of(context).size.width;
-
     return Padding(
       padding: EdgeInsets.only(
-        top: screenWidth * 0.0125,
-        left: screenWidth * 0.0225,
-        right: screenWidth * 0.0255,
+        top: 13.h,
+        left: 24.w,
+        right: 28.w,
       ),
       child: Row(
         children: [
           CircleAvatar(
             backgroundColor: Theme.of(context).colorScheme.onError,
-            maxRadius: MediaQuery.of(context).size.width * 0.0021,
+            maxRadius: 2.r,
           ),
           const SizedBox(
             width: 7,
@@ -311,7 +306,7 @@ class TopTitle extends StatelessWidget {
             title,
             style: TextStyle(
               fontFamily: 'Roboto',
-              fontSize: MediaQuery.of(context).size.width * 0.014,
+              fontSize: 15.sp,
               color: Theme.of(context).colorScheme.onError,
               fontWeight: FontWeight.w500,
               letterSpacing: 0.5,
@@ -343,28 +338,22 @@ class SystemStatusState extends State<SystemStatus> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        // width: 128,
-        width: MediaQuery.of(context).size.width * 0.07,
-        // height: 30,
-        height: MediaQuery.of(context).size.height * 0.03,
+        width: 76.w,
+        height: 58.h,
         decoration: BoxDecoration(
           color: widget.isPowerOn
               ? widget.status!
                   ? const Color.fromRGBO(0, 187, 97, 1)
                   : const Color.fromRGBO(242, 61, 61, 1)
               : Colors.grey,
-          borderRadius: BorderRadius.circular(
-            // 10
-            MediaQuery.of(context).size.width * 0.005,
-          ),
+          borderRadius: BorderRadius.circular(5.r),
         ),
         child: Center(
           child: Text(
             widget.title!,
             style: TextStyle(
               color: Colors.white,
-              // fontSize: 14,
-              fontSize: MediaQuery.of(context).size.width * 0.009,
+              fontSize: 10.sp,
               fontFamily: 'Roboto',
               fontWeight: FontWeight.w700,
               letterSpacing: 0.5,

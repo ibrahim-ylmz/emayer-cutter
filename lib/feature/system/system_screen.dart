@@ -194,8 +194,6 @@ class _SystemScreenState extends State<SystemScreen> with SystemScreenMixin {
                             ),
                           ),
                         ),
-
-                        /// i need sizedbox
                         SizedBox(height: 100.h),
                         Expanded(
                           child: StatusContainer(
@@ -291,7 +289,7 @@ class _SystemScreenState extends State<SystemScreen> with SystemScreenMixin {
                       ],
                     ),
                   ),
-                  SizedBox(width: 100.w),
+                  SizedBox(width: 40.w),
                   Expanded(child: Placeholder()),
                 ],
               ),

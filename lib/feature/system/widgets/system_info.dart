@@ -1,3 +1,4 @@
+import 'package:emayer_cutter/core/design/size_extensions.dart';
 import 'package:flutter/material.dart';
 
 class SystemInfo extends StatefulWidget {
@@ -30,16 +31,12 @@ class SystemInfo extends StatefulWidget {
 class _SystemInfoState extends State<SystemInfo> {
   @override
   Widget build(BuildContext context) {
-    final double screenWidth = MediaQuery.of(context).size.width;
-
     return Container(
-      width: MediaQuery.of(context).size.width * 0.19,
+      width: 205.w,
       height: double.infinity,
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.primaryContainer,
-        borderRadius: BorderRadius.circular(
-          MediaQuery.of(context).size.width * 0.015,
-        ),
+        borderRadius: BorderRadius.circular(16.r),
         boxShadow: const [
           BoxShadow(
             color: Color.fromRGBO(0, 0, 0, 0.25),
@@ -52,15 +49,15 @@ class _SystemInfoState extends State<SystemInfo> {
         children: [
           Padding(
             padding: EdgeInsets.only(
-              top: screenWidth * 0.010,
-              left: screenWidth * 0.02,
-              bottom: screenWidth * 0.006,
+              top: 11.h,
+              left: 22.w,
+              bottom: 6.h,
             ),
             child: Row(
               children: [
                 Container(
-                  width: screenWidth * 0.004,
-                  height: screenWidth * 0.004,
+                  width: 4.w,
+                  height: 4.w,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: Theme.of(context).colorScheme.onError,
@@ -68,14 +65,13 @@ class _SystemInfoState extends State<SystemInfo> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width * 0.004,
+                    left: 4.w,
                   ),
                   child: Text(
                     widget.title,
                     style: TextStyle(
                       fontFamily: 'Roboto',
-                      // fontSize: 24,
-                      fontSize: MediaQuery.of(context).size.width * 0.015,
+                      fontSize: 16.sp,
                       color: Theme.of(context).colorScheme.onError,
                       fontWeight: FontWeight.w500,
                       letterSpacing: 0.5,
@@ -118,14 +114,10 @@ class _InfoItemState extends State<InfoItem> {
       children: [
         Padding(
           padding: EdgeInsets.only(
-            // left: 55,
-            left: MediaQuery.of(context).size.width * 0.028,
-            // right: 55,
-            right: MediaQuery.of(context).size.width * 0.028,
-            // bottom: 10,
-            bottom: MediaQuery.of(context).size.height * 0.008,
-            // top: 10,
-            top: MediaQuery.of(context).size.height * 0.008,
+            left: 30.w,
+            right: 30.w,
+            bottom: 15.h,
+            top: 15.h,
           ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -137,8 +129,7 @@ class _InfoItemState extends State<InfoItem> {
                 child: Text(widget.valueText,
                     style: TextStyle(
                         color: Theme.of(context).colorScheme.onError,
-                        // fontSize: 15,
-                        fontSize: MediaQuery.of(context).size.width * 0.008,
+                        fontSize: 8.sp,
                         fontFamily: 'Roboto',
                         fontWeight: FontWeight.w300,
                         letterSpacing: 0.5)),
@@ -149,8 +140,7 @@ class _InfoItemState extends State<InfoItem> {
                 child: Text(widget.value,
                     style: TextStyle(
                         color: Theme.of(context).colorScheme.onError,
-                        // fontSize: 15,
-                        fontSize: MediaQuery.of(context).size.width * 0.0078,
+                        fontSize: 8.sp,
                         fontFamily: 'Roboto',
                         fontWeight: FontWeight.w300,
                         letterSpacing: 0.5)),
@@ -162,10 +152,8 @@ class _InfoItemState extends State<InfoItem> {
             ? Container()
             : Padding(
                 padding: EdgeInsets.only(
-                  // left: 23,
-                  left: MediaQuery.of(context).size.width * 0.012,
-                  // right: 23,
-                  right: MediaQuery.of(context).size.width * 0.012,
+                  left: 13.w,
+                  right: 13.w,
                 ),
                 child: Divider(
                     height: 1, color: Theme.of(context).colorScheme.secondary),
