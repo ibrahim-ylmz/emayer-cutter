@@ -108,9 +108,9 @@ class _FlutterSwitchState extends State<SystemButton>
       toggleColor = widget.inactiveToggleColor ?? widget.toggleColor;
     }
 
-    double textSpace = (widget.width ?? 56.w) -
-        (widget.toggleSize ?? 20.w) -
-        3;
+    double textSpace = (widget.width ?? 88.w) -
+        (widget.toggleSize ?? 32.w) -
+        6;
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -146,12 +146,12 @@ class _FlutterSwitchState extends State<SystemButton>
                 child: Opacity(
                   opacity: widget.disabled ? 0.6 : 1,
                   child: Container(
-                    width: widget.width ?? 73.w,
-                    height: widget.height ?? 33.h,
+                    width: widget.width ?? 88.w,
+                    height: widget.height ?? 40.h,
                     padding: EdgeInsets.all(widget.padding),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(
-                        widget.borderRadius ?? 16.r,
+                        widget.borderRadius ?? 20.r,
                       ),
                       // color: switchColor,
                       color: Theme.of(context).colorScheme.secondaryContainer,
@@ -164,7 +164,7 @@ class _FlutterSwitchState extends State<SystemButton>
                           child: Container(
                             width: textSpace,
                             padding: EdgeInsets.symmetric(
-                              horizontal: 2.w,
+                              horizontal: 4.w,
                             ),
                             alignment: Alignment.center,
                             child: _activeText,
@@ -178,7 +178,7 @@ class _FlutterSwitchState extends State<SystemButton>
                             child: Container(
                               width: textSpace,
                               padding: EdgeInsets.symmetric(
-                                horizontal: 2.w,
+                                horizontal: 4.w,
                               ),
                               alignment: Alignment.center,
                               child: _inactiveText,
@@ -189,9 +189,9 @@ class _FlutterSwitchState extends State<SystemButton>
                           alignment: _toggleAnimation.value,
                           child: AnimatedContainer(
                               duration: widget.duration,
-                              width: widget.toggleSize ?? 27.w,
-                              height: widget.toggleSize ?? 27.w,
-                              padding: EdgeInsets.all(2.w),
+                              width: widget.toggleSize ?? 32.w,
+                              height: widget.toggleSize ?? 32.w,
+                              padding: EdgeInsets.all(3.w),
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: toggleColor,
@@ -221,7 +221,7 @@ class _FlutterSwitchState extends State<SystemButton>
         // color: const Color.fromRGBO(147, 147, 147, 1),
         color: Theme.of(context).colorScheme.tertiary,
         fontFamily: 'Roboto',
-        fontSize: widget.textSize ?? 9.sp,
+        fontSize: widget.textSize ?? 11.sp,
       ),
     );
   }
@@ -232,7 +232,7 @@ class _FlutterSwitchState extends State<SystemButton>
       style: TextStyle(
         color: Theme.of(context).colorScheme.tertiary,
         fontFamily: 'Roboto',
-        fontSize: widget.textSize ?? 9.sp,
+        fontSize: widget.textSize ?? 11.sp,
       ),
     );
   }

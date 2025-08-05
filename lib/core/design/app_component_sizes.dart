@@ -38,9 +38,9 @@ class AppComponentSizes {
   static double get mediumRadius => 10.r;
   static double get largeRadius => 16.r;
   
-  // Container dimensions
-  static double get cardWidth => 300.w;
-  static double get cardHeight => 200.h;
-  static double get dialogWidth => 400.w;
-  static double get dialogMaxHeight => 600.h;
+  // Container dimensions (increased)
+  static double get cardWidth => 360.w;
+  static double get cardHeight => 240.h;
+  static double get dialogWidth => 480.w;
+  static double get dialogMaxHeight => 720.h;
 }
