@@ -55,7 +55,10 @@ class _SystemScreenState extends State<SystemScreen> with SystemScreenMixin {
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 Padding(
-                                  padding: EdgeInsets.only(top: 12.h, left: 21.w),
+                                  padding: EdgeInsets.only(
+                                    top: 12.h,
+                                    left: 21.w,
+                                  ),
                                   child: Row(
                                     children: [
                                       Container(
@@ -191,9 +194,14 @@ class _SystemScreenState extends State<SystemScreen> with SystemScreenMixin {
                             ),
                           ),
                         ),
+
+                        /// i need sizedbox
+                        SizedBox(height: 100.h),
                         Expanded(
                           child: StatusContainer(
-                            isPowerOn: context.watch<SystemNotifier>().isPowerOn,
+                            isPowerOn: context
+                                .watch<SystemNotifier>()
+                                .isPowerOn,
                             sensor1Text: 'Sensor 1',
                             sensor1Status:
                                 context
@@ -269,7 +277,7 @@ class _SystemScreenState extends State<SystemScreen> with SystemScreenMixin {
                             torqueIncrease: context
                                 .read<SystemNotifier>()
                                 .torqueIncrease,
-                          
+
                             infoText1: 'Torque',
                             infoValue1:
                                 context
@@ -283,7 +291,7 @@ class _SystemScreenState extends State<SystemScreen> with SystemScreenMixin {
                       ],
                     ),
                   ),
-                  SizedBox(height: 10.h),
+                  SizedBox(width: 100.w),
                   Expanded(child: Placeholder()),
                 ],
               ),
