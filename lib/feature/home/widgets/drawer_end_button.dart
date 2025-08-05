@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:emayer_cutter/core/design/size_extensions.dart';
 
 class DrawerEndButton extends StatefulWidget {
   const DrawerEndButton(
@@ -19,14 +20,13 @@ class DrawerEndButton extends StatefulWidget {
 class _DrawerEndButtonState extends State<DrawerEndButton> {
   @override
   Widget build(BuildContext context) {
-    final double screenWidth = MediaQuery.of(context).size.width;
     return InkWell(
       onTap: widget.onPressed,
       child: LayoutBuilder(
         builder: (context, constraints) {
           final double buttonWidth = constraints.maxWidth;
           return SizedBox(
-            height: screenWidth * 0.0295,
+            height: 32.h,
             width: double.infinity,
             child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -34,19 +34,18 @@ class _DrawerEndButtonState extends State<DrawerEndButton> {
                 children: [
                   SvgPicture.asset(
                     widget.svgIcon ?? "Null",
-                    height: screenWidth * 0.013,
+                    height: 14.s,
                   ),
-                  buttonWidth > screenWidth * 0.14
+                  buttonWidth > 151.w
                       ? Padding(
                           padding: EdgeInsets.only(
-                            left: screenWidth * 0.027,
+                            left: 29.w,
                           ),
                           child: Text(
                             widget.title ?? "Null",
                             style: TextStyle(
                               color: const Color.fromRGBO(255, 255, 255, 0.8),
-                              fontSize:
-                                  MediaQuery.of(context).size.width * 0.008,
+                              fontSize: 9.sp,
                             ),
                           ),
                         )

@@ -1,4 +1,6 @@
 import 'package:emayer_cutter/core/constant/const_asset.dart';
+import 'package:emayer_cutter/core/design/size_extensions.dart';
+import 'package:emayer_cutter/core/design/app_component_sizes.dart';
 import 'package:emayer_cutter/core/navigation/app_router.dart';
 import 'package:emayer_cutter/core/navigation/app_router_name.dart';
 import 'package:emayer_cutter/feature/home/home_notifier.dart';
@@ -47,12 +49,11 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   AnimatedContainer homeDashBoard() {
-    final double width = MediaQuery.of(context).size.width;
     return AnimatedContainer(
       duration: Durations.long2,
       width: context.watch<HomeNotifier>().isSidebarOpen
-          ? MediaQuery.of(context).size.width * 0.18
-          : MediaQuery.of(context).size.width * 0.07,
+          ? AppComponentSizes.sidebarExpandedWidth
+          : AppComponentSizes.sidebarCollapsedWidth,
       color: const Color(0xFF171717),
       child: Column(
         children: [
@@ -64,13 +65,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     final double imageWidth = constraints.maxWidth;
                     return Padding(
                       padding: EdgeInsets.only(
-                        top: width * 0.022,
-                        bottom: width * 0.03,
-                        left: (imageWidth > width * 0.01) ? width * 0.01 : 0,
-                        right: (imageWidth > width * 0.01) ? width * 0.01 : 0,
+                        top: 24.h,
+                        bottom: 32.h,
+                        left: (imageWidth > 10.w) ? 10.w : 0,
+                        right: (imageWidth > 10.w) ? 10.w : 0,
                       ),
                       child: SvgPicture.asset(
-                        height: width * 0.027,
+                        height: 29.h,
                         AssetsConfirguration.drawerLogo,
                       ),
                     );
@@ -78,8 +79,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(
-                    right: width * 0.015,
-                    left: width * 0.015,
+                    right: 16.w,
+                    left: 16.w,
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -129,8 +130,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(
-                    right: width * 0.015,
-                    left: width * 0.015,
+                    right: 16.w,
+                    left: 16.w,
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -151,7 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                       ),
                       Padding(
-                        padding: EdgeInsets.only(top: width * 0.053),
+                        padding: EdgeInsets.only(top: 57.h),
                         child: const DrawerInfo(),
                       ),
                     ],

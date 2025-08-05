@@ -1,4 +1,6 @@
 import 'package:emayer_cutter/core/constant/const_asset.dart';
+import 'package:emayer_cutter/core/design/size_extensions.dart';
+import 'package:emayer_cutter/core/design/app_component_sizes.dart';
 import 'package:emayer_cutter/core/navigation/app_router.dart';
 import 'package:emayer_cutter/core/navigation/route_title_mapper.dart';
 import 'package:emayer_cutter/core/notifiers/theme_notifier.dart';
@@ -23,11 +25,11 @@ class _TopBarState extends State<TopBar> {
     final themeChanger = Provider.of<ThemeNotifier>(context);
     final homeNotifier = Provider.of<HomeNotifier>(context);
     return Container(
-      height: MediaQuery.of(context).size.width * 0.0630,
+      height: AppComponentSizes.topBarHeight,
       color: Theme.of(context).colorScheme.onSecondary,
       child: Padding(
         padding: EdgeInsets.only(
-          left: MediaQuery.of(context).size.width * 0.0255,
+          left: 27.w,
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -40,7 +42,7 @@ class _TopBarState extends State<TopBar> {
                     homeNotifier.toggleSidebar();
                   },
                   child: SvgPicture.asset(
-                    height: MediaQuery.of(context).size.width * 0.024,
+                    height: 26.s,
                     AssetsConfirguration.hamburgerMenu,
                     colorFilter: ColorFilter.mode(
                       Theme.of(context).colorScheme.onError,
@@ -50,14 +52,14 @@ class _TopBarState extends State<TopBar> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width * 0.0202,
+                    left: 22.w,
                   ),
                   child: Text(
                     widget.title!,
                     style: TextStyle(
                       fontFamily: 'Roboto',
                       color: Theme.of(context).colorScheme.onError,
-                      fontSize: MediaQuery.of(context).size.width * 0.015,
+                      fontSize: 16.sp,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -72,7 +74,7 @@ class _TopBarState extends State<TopBar> {
                 PageTitle.system)
               Padding(
                 padding: EdgeInsets.only(
-                  right: MediaQuery.of(context).size.width * 0.026,
+                  right: 28.w,
                 ),
                 child: SystemButton(
                   activeText: 'Light',
@@ -81,7 +83,7 @@ class _TopBarState extends State<TopBar> {
                   activeToggleColor: const Color.fromRGBO(241, 241, 241, 1),
                   activeIcon: Icon(
                     color: const Color.fromRGBO(125, 126, 127, 1),
-                    size: MediaQuery.of(context).size.width * 0.015,
+                    size: 16.s,
                     Icons.wb_sunny_outlined,
                   ),
                   inactiveText: 'Dark',
@@ -90,8 +92,8 @@ class _TopBarState extends State<TopBar> {
                   inactiveToggleColor: const Color.fromRGBO(23, 23, 23, 1),
                   inactiveIcon: SvgPicture.asset(
                     AssetsConfirguration.systemLightOff,
-                    height: MediaQuery.of(context).size.width * 0.015,
-                    width: MediaQuery.of(context).size.width * 0.015,
+                    height: 16.s,
+                    width: 16.s,
                   ),
                   value: themeChanger.isLightMode,
                   onToggle: (val) {

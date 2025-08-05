@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:emayer_cutter/core/design/size_extensions.dart';
 
 class DrawerInfo extends StatelessWidget {
   const DrawerInfo({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final double screenWidth = MediaQuery.of(context).size.width;
     return LayoutBuilder(
       builder: (context, constraints) {
         final double drawerWidth = constraints.maxWidth;
-        if (drawerWidth > screenWidth * 0.13) {
+        if (drawerWidth > 140.w) {
           return Padding(
             padding: const EdgeInsets.only(bottom: 25),
             child: Column(
@@ -24,7 +24,7 @@ class DrawerInfo extends StatelessWidget {
                     letterSpacing: 1,
                     color: const Color.fromRGBO(255, 255, 255, 1),
                     fontWeight: FontWeight.w600,
-                    fontSize: screenWidth * 0.015,
+                    fontSize: 16.sp,
                   ),
                 ),
                 RichText(
@@ -37,7 +37,7 @@ class DrawerInfo extends StatelessWidget {
                       color: const Color.fromRGBO(255, 255, 255, 1),
                       fontWeight: FontWeight.w600,
                       height: 1.8,
-                      fontSize: screenWidth * 0.0073,
+                      fontSize: 8.sp,
                     ),
                     children: [
                       TextSpan(
@@ -45,7 +45,7 @@ class DrawerInfo extends StatelessWidget {
                         style: TextStyle(
                           fontWeight: FontWeight.w400,
                           color: const Color.fromRGBO(255, 255, 255, 1),
-                          fontSize: screenWidth * 0.0073,
+                          fontSize: 8.sp,
                         ),
                       ),
                     ],
@@ -56,7 +56,7 @@ class DrawerInfo extends StatelessWidget {
           );
         } else {
           return SizedBox(
-            height: screenWidth * 0.066,
+            height: 71.h,
           );
         }
       },

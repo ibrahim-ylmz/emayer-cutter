@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:emayer_cutter/core/design/size_extensions.dart';
 
 class DrawerUpButton extends StatelessWidget {
   const DrawerUpButton({
@@ -21,12 +22,11 @@ class DrawerUpButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double screenWidth = MediaQuery.of(context).size.width;
     Duration duration = Durations.long4;
 
     return Padding(
       padding: EdgeInsets.only(
-        bottom: screenWidth * 0.013,
+        bottom: 14.h,
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(55),
@@ -38,10 +38,10 @@ class DrawerUpButton extends StatelessWidget {
               duration: duration,
               curve: Curves.easeOut,
               width: double.infinity,
-              height: screenWidth * 0.035,
+              height: 38.h,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(55),
-                color: (isEnable && buttonWidth > screenWidth * 0.14)
+                color: (isEnable && buttonWidth > 151.w)
                     ? const Color.fromRGBO(255, 255, 255, 0.21)
                     : Colors.transparent,
               ),
@@ -50,7 +50,7 @@ class DrawerUpButton extends StatelessWidget {
                 children: [
                   Flexible(
                     child: AnimatedContainer(
-                      width: screenWidth * 0.034,
+                      width: 37.w,
                       duration: duration,
                       curve: Curves.easeOut,
                       decoration: BoxDecoration(
@@ -62,7 +62,7 @@ class DrawerUpButton extends StatelessWidget {
                       child: Center(
                         child: SvgPicture.asset(
                           svgIcon,
-                          height: screenWidth * 0.013,
+                          height: 14.s,
                           // ignore: deprecated_member_use
                           color: isEnable
                               ? const Color.fromRGBO(23, 23, 23, 1)
@@ -71,9 +71,9 @@ class DrawerUpButton extends StatelessWidget {
                       ),
                     ),
                   ),
-                  buttonWidth > screenWidth * 0.14
+                  buttonWidth > 151.w
                       ? Padding(
-                          padding: EdgeInsets.only(left: screenWidth * 0.014),
+                          padding: EdgeInsets.only(left: 15.w),
                           child: Center(
                             child: Text(
                               title,
@@ -82,17 +82,17 @@ class DrawerUpButton extends StatelessWidget {
                                 color: isEnable
                                     ? const Color.fromRGBO(255, 255, 255, 1)
                                     : const Color.fromRGBO(255, 255, 255, 0.8),
-                                fontSize: screenWidth * 0.01,
+                                fontSize: 11.sp,
                               ),
                             ),
                           ),
                         )
                       : Container(),
-                  if (buttonWidth > screenWidth * 0.14 && isStreaming)
+                  if (buttonWidth > 151.w && isStreaming)
                     Padding(
-                      padding: EdgeInsets.only(left: screenWidth * 0.004),
+                      padding: EdgeInsets.only(left: 4.w),
                       child: Container(
-                        height: screenWidth * 0.0145,
+                        height: 16.h,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(23),
                           color: isStreamingOk
@@ -101,11 +101,11 @@ class DrawerUpButton extends StatelessWidget {
                         ),
                         child: Padding(
                           padding: EdgeInsets.symmetric(
-                              horizontal: screenWidth * 0.005),
+                              horizontal: 5.w),
                           child: Row(
                             children: [
                               Container(
-                                width: screenWidth * 0.003,
+                                width: 3.w,
                                 decoration: const BoxDecoration(
                                   shape: BoxShape.circle,
                                   color: Colors.white,
@@ -113,13 +113,13 @@ class DrawerUpButton extends StatelessWidget {
                               ),
                               Padding(
                                 padding:
-                                    EdgeInsets.only(left: screenWidth * 0.003),
+                                    EdgeInsets.only(left: 3.w),
                                 child: Text(
                                   isStreamingOk ? "Online" : "Offline",
                                   style: TextStyle(
                                     fontFamily: "Roboto",
                                     color: Colors.white,
-                                    fontSize: screenWidth * 0.008,
+                                    fontSize: 9.sp,
                                   ),
                                 ),
                               ),
