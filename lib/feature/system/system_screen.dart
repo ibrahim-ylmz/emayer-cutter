@@ -34,247 +34,251 @@ class _SystemScreenState extends State<SystemScreen> with SystemScreenMixin {
                   Expanded(
                     child: Column(
                       children: [
-                        Container(
-                          padding: EdgeInsets.only(bottom: 10.h),
-                          decoration: BoxDecoration(
-                            color: Theme.of(
-                              context,
-                            ).colorScheme.primaryContainer,
-                            borderRadius: BorderRadius.circular(30.r),
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Color.fromRGBO(0, 0, 0, 0.25),
-                                offset: Offset(0, 4),
-                                blurRadius: 4,
-                              ),
-                            ],
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(top: 12.h, left: 21.w),
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      width: 4.w,
-                                      height: 4.w,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Theme.of(
-                                          context,
-                                        ).colorScheme.onError,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(left: 4.w),
-                                      child: Text(
-                                        'Control',
-                                        style: TextStyle(
-                                          fontFamily: 'Roboto',
-                                          fontSize: 15.sp,
+                        Expanded(
+                          child: Container(
+                            padding: EdgeInsets.only(bottom: 10.h),
+                            decoration: BoxDecoration(
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.primaryContainer,
+                              borderRadius: BorderRadius.circular(30.r),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Color.fromRGBO(0, 0, 0, 0.25),
+                                  offset: Offset(0, 4),
+                                  blurRadius: 4,
+                                ),
+                              ],
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(top: 12.h, left: 21.w),
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        width: 4.w,
+                                        height: 4.w,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
                                           color: Theme.of(
                                             context,
                                           ).colorScheme.onError,
-                                          fontWeight: FontWeight.w300,
-                                          letterSpacing: 0.5,
                                         ),
                                       ),
+                                      Padding(
+                                        padding: EdgeInsets.only(left: 4.w),
+                                        child: Text(
+                                          'Control',
+                                          style: TextStyle(
+                                            fontFamily: 'Roboto',
+                                            fontSize: 15.sp,
+                                            color: Theme.of(
+                                              context,
+                                            ).colorScheme.onError,
+                                            fontWeight: FontWeight.w300,
+                                            letterSpacing: 0.5,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                    top: 7.h,
+                                    left: 27.w,
+                                    right: 27.w,
+                                    bottom: 3.h,
+                                  ),
+                                  child: SystemButton(
+                                    title: 'Power',
+                                    inactiveIcon: Icon(
+                                      color: Colors.white,
+                                      size: 16.s,
+                                      Icons.power_settings_new_rounded,
                                     ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  top: 7.h,
-                                  left: 27.w,
-                                  right: 27.w,
-                                  bottom: 3.h,
-                                ),
-                                child: SystemButton(
-                                  title: 'Power',
-                                  inactiveIcon: Icon(
-                                    color: Colors.white,
-                                    size: 16.s,
-                                    Icons.power_settings_new_rounded,
+                                    activeIcon: SvgPicture.asset(
+                                      height: 10.h,
+                                      AssetsConfirguration.systemPowerOn,
+                                    ),
+                                    value: context
+                                        .watch<SystemNotifier>()
+                                        .isPowerOn,
+                                    onToggle: context
+                                        .read<SystemNotifier>()
+                                        .sendPowerOnRequest,
                                   ),
-                                  activeIcon: SvgPicture.asset(
-                                    height: 10.h,
-                                    AssetsConfirguration.systemPowerOn,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                    left: 12.w,
+                                    right: 12.w,
+                                    bottom: 3.h,
                                   ),
-                                  value: context
-                                      .watch<SystemNotifier>()
-                                      .isPowerOn,
-                                  onToggle: context
-                                      .read<SystemNotifier>()
-                                      .sendPowerOnRequest,
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  left: 12.w,
-                                  right: 12.w,
-                                  bottom: 3.h,
-                                ),
-                                child: Divider(
-                                  height: 1,
-                                  color: Theme.of(
-                                    context,
-                                  ).colorScheme.secondary,
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  left: 27.w,
-                                  right: 27.w,
-                                  bottom: 3.h,
-                                ),
-                                child: SystemButton(
-                                  title: 'Vacuum',
-                                  inactiveIcon: SvgPicture.asset(
-                                    height: 16.h,
-                                    AssetsConfirguration.systemVacuumOff,
+                                  child: Divider(
+                                    height: 1,
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.secondary,
                                   ),
-                                  activeIcon: SvgPicture.asset(
-                                    height: 18.h,
-                                    AssetsConfirguration.systemVacuumOn,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                    left: 27.w,
+                                    right: 27.w,
+                                    bottom: 3.h,
                                   ),
-                                  value: context
-                                      .watch<SystemNotifier>()
-                                      .isVacuumOn,
-                                  onToggle: context
-                                      .read<SystemNotifier>()
-                                      .sendVacuumOnRequest,
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  left: 12.w,
-                                  right: 12.w,
-                                  bottom: 3.h,
-                                ),
-                                child: Divider(
-                                  height: 1,
-                                  color: Theme.of(
-                                    context,
-                                  ).colorScheme.secondary,
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  left: 27.w,
-                                  right: 27.w,
-                                  bottom: 3.h,
-                                ),
-                                child: SystemButton(
-                                  title: 'Lights',
-                                  inactiveIcon: SvgPicture.asset(
-                                    height: 16.h,
-                                    AssetsConfirguration.systemLightOff,
+                                  child: SystemButton(
+                                    title: 'Vacuum',
+                                    inactiveIcon: SvgPicture.asset(
+                                      height: 16.h,
+                                      AssetsConfirguration.systemVacuumOff,
+                                    ),
+                                    activeIcon: SvgPicture.asset(
+                                      height: 18.h,
+                                      AssetsConfirguration.systemVacuumOn,
+                                    ),
+                                    value: context
+                                        .watch<SystemNotifier>()
+                                        .isVacuumOn,
+                                    onToggle: context
+                                        .read<SystemNotifier>()
+                                        .sendVacuumOnRequest,
                                   ),
-                                  activeIcon: Icon(
-                                    color: Colors.white,
-                                    size: 16.s,
-                                    Icons.wb_sunny_outlined,
-                                  ),
-                                  value: context
-                                      .watch<SystemNotifier>()
-                                      .isLightsOn,
-                                  onToggle: context
-                                      .read<SystemNotifier>()
-                                      .sendLightsOnRequest,
                                 ),
-                              ),
-                            ],
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                    left: 12.w,
+                                    right: 12.w,
+                                    bottom: 3.h,
+                                  ),
+                                  child: Divider(
+                                    height: 1,
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.secondary,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                    left: 27.w,
+                                    right: 27.w,
+                                    bottom: 3.h,
+                                  ),
+                                  child: SystemButton(
+                                    title: 'Lights',
+                                    inactiveIcon: SvgPicture.asset(
+                                      height: 16.h,
+                                      AssetsConfirguration.systemLightOff,
+                                    ),
+                                    activeIcon: Icon(
+                                      color: Colors.white,
+                                      size: 16.s,
+                                      Icons.wb_sunny_outlined,
+                                    ),
+                                    value: context
+                                        .watch<SystemNotifier>()
+                                        .isLightsOn,
+                                    onToggle: context
+                                        .read<SystemNotifier>()
+                                        .sendLightsOnRequest,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                        StatusContainer(
-                          isPowerOn: context.watch<SystemNotifier>().isPowerOn,
-                          sensor1Text: 'Sensor 1',
-                          sensor1Status:
-                              context
-                                  .watch<SystemNotifier>()
-                                  .systemStatus
-                                  .message
-                                  ?.sensors
-                                  ?.sensor1 ??
-                              false,
-                          sensor2Text: 'Sensor 2',
-                          sensor2Status:
-                              context
-                                  .watch<SystemNotifier>()
-                                  .systemStatus
-                                  .message
-                                  ?.sensors
-                                  ?.sensor2 ??
-                              false,
-                          sensor3Text: 'Sensor 3',
-                          sensor3Status:
-                              context
-                                  .watch<SystemNotifier>()
-                                  .systemStatus
-                                  .message
-                                  ?.sensors
-                                  ?.sensor3 ??
-                              false,
-                          motor1Text: 'Motor 1',
-                          motor1Status:
-                              context
-                                  .watch<SystemNotifier>()
-                                  .systemStatus
-                                  .message
-                                  ?.motors
-                                  ?.motor1 ??
-                              false,
-                          motor2Text: 'Motor 2',
-                          motor2Status:
-                              context
-                                  .watch<SystemNotifier>()
-                                  .systemStatus
-                                  .message
-                                  ?.motors
-                                  ?.motor2 ??
-                              false,
-                          motor3Text: 'Motor 3',
-                          motor3Status:
-                              context
-                                  .watch<SystemNotifier>()
-                                  .systemStatus
-                                  .message
-                                  ?.motors
-                                  ?.motor3 ??
-                              false,
-                          topTitle: 'Status',
-                          infoText: 'Speed',
-                          infoValue:
-                              context
-                                  .watch<SystemNotifier>()
-                                  .systemValue
-                                  .message
-                                  ?.speed ??
-                              0,
-                          speedDecrease: context
-                              .read<SystemNotifier>()
-                              .speedDecrease,
-                          speedIncrease: context
-                              .read<SystemNotifier>()
-                              .speedIncrease,
-                          torqueDecrease: context
-                              .read<SystemNotifier>()
-                              .torqueDecrease,
-                          torqueIncrease: context
-                              .read<SystemNotifier>()
-                              .torqueIncrease,
-
-                          infoText1: 'Torque',
-                          infoValue1:
-                              context
-                                  .watch<SystemNotifier>()
-                                  .systemValue
-                                  .message
-                                  ?.torque ??
-                              0,
+                        Expanded(
+                          child: StatusContainer(
+                            isPowerOn: context.watch<SystemNotifier>().isPowerOn,
+                            sensor1Text: 'Sensor 1',
+                            sensor1Status:
+                                context
+                                    .watch<SystemNotifier>()
+                                    .systemStatus
+                                    .message
+                                    ?.sensors
+                                    ?.sensor1 ??
+                                false,
+                            sensor2Text: 'Sensor 2',
+                            sensor2Status:
+                                context
+                                    .watch<SystemNotifier>()
+                                    .systemStatus
+                                    .message
+                                    ?.sensors
+                                    ?.sensor2 ??
+                                false,
+                            sensor3Text: 'Sensor 3',
+                            sensor3Status:
+                                context
+                                    .watch<SystemNotifier>()
+                                    .systemStatus
+                                    .message
+                                    ?.sensors
+                                    ?.sensor3 ??
+                                false,
+                            motor1Text: 'Motor 1',
+                            motor1Status:
+                                context
+                                    .watch<SystemNotifier>()
+                                    .systemStatus
+                                    .message
+                                    ?.motors
+                                    ?.motor1 ??
+                                false,
+                            motor2Text: 'Motor 2',
+                            motor2Status:
+                                context
+                                    .watch<SystemNotifier>()
+                                    .systemStatus
+                                    .message
+                                    ?.motors
+                                    ?.motor2 ??
+                                false,
+                            motor3Text: 'Motor 3',
+                            motor3Status:
+                                context
+                                    .watch<SystemNotifier>()
+                                    .systemStatus
+                                    .message
+                                    ?.motors
+                                    ?.motor3 ??
+                                false,
+                            topTitle: 'Status',
+                            infoText: 'Speed',
+                            infoValue:
+                                context
+                                    .watch<SystemNotifier>()
+                                    .systemValue
+                                    .message
+                                    ?.speed ??
+                                0,
+                            speedDecrease: context
+                                .read<SystemNotifier>()
+                                .speedDecrease,
+                            speedIncrease: context
+                                .read<SystemNotifier>()
+                                .speedIncrease,
+                            torqueDecrease: context
+                                .read<SystemNotifier>()
+                                .torqueDecrease,
+                            torqueIncrease: context
+                                .read<SystemNotifier>()
+                                .torqueIncrease,
+                          
+                            infoText1: 'Torque',
+                            infoValue1:
+                                context
+                                    .watch<SystemNotifier>()
+                                    .systemValue
+                                    .message
+                                    ?.torque ??
+                                0,
+                          ),
                         ),
                       ],
                     ),
