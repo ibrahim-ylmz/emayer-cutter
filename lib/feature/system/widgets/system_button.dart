@@ -151,7 +151,7 @@ class _FlutterSwitchState extends State<SystemButton>
                     padding: EdgeInsets.all(widget.padding),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(
-                        widget.borderRadius ?? 20.r,
+                        widget.borderRadius ?? 30.r,
                       ),
                       // color: switchColor,
                       color: Theme.of(context).colorScheme.secondaryContainer,

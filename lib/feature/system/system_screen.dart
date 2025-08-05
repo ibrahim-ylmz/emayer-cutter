@@ -62,8 +62,8 @@ class _SystemScreenState extends State<SystemScreen> with SystemScreenMixin {
                                   child: Row(
                                     children: [
                                       Container(
-                                        width: 4.w,
-                                        height: 4.w,
+                                        width: 6.w,
+                                        height: 6.w,
                                         decoration: BoxDecoration(
                                           shape: BoxShape.circle,
                                           color: Theme.of(
@@ -77,7 +77,7 @@ class _SystemScreenState extends State<SystemScreen> with SystemScreenMixin {
                                           'Control',
                                           style: TextStyle(
                                             fontFamily: 'Roboto',
-                                            fontSize: 15.sp,
+                                            fontSize: 20.sp,
                                             color: Theme.of(
                                               context,
                                             ).colorScheme.onError,
@@ -100,11 +100,11 @@ class _SystemScreenState extends State<SystemScreen> with SystemScreenMixin {
                                     title: 'Power',
                                     inactiveIcon: Icon(
                                       color: Colors.white,
-                                      size: 16.s,
+                                      size: 25.s,
                                       Icons.power_settings_new_rounded,
                                     ),
                                     activeIcon: SvgPicture.asset(
-                                      height: 10.h,
+                                      height: 15.h,
                                       AssetsConfirguration.systemPowerOn,
                                     ),
                                     value: context
@@ -137,11 +137,11 @@ class _SystemScreenState extends State<SystemScreen> with SystemScreenMixin {
                                   child: SystemButton(
                                     title: 'Vacuum',
                                     inactiveIcon: SvgPicture.asset(
-                                      height: 16.h,
+                                      height: 25.s,
                                       AssetsConfirguration.systemVacuumOff,
                                     ),
                                     activeIcon: SvgPicture.asset(
-                                      height: 18.h,
+                                      height: 15.h,
                                       AssetsConfirguration.systemVacuumOn,
                                     ),
                                     value: context
@@ -174,12 +174,12 @@ class _SystemScreenState extends State<SystemScreen> with SystemScreenMixin {
                                   child: SystemButton(
                                     title: 'Lights',
                                     inactiveIcon: SvgPicture.asset(
-                                      height: 16.h,
+                                      height: 25.s,
                                       AssetsConfirguration.systemLightOff,
                                     ),
                                     activeIcon: Icon(
                                       color: Colors.white,
-                                      size: 16.s,
+                                      size: 15.s,
                                       Icons.wb_sunny_outlined,
                                     ),
                                     value: context
