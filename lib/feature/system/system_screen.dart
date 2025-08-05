@@ -5,6 +5,7 @@ import 'package:emayer_cutter/feature/system/system_screen_mixin.dart';
 import 'package:emayer_cutter/feature/system/widgets/system_button.dart';
 import 'package:emayer_cutter/feature/system/widgets/system_info.dart';
 import 'package:emayer_cutter/feature/system/widgets/system_status.dart';
+import 'package:emayer_cutter/feature/system/widgets/slice_control.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -290,7 +291,7 @@ class _SystemScreenState extends State<SystemScreen> with SystemScreenMixin {
                     ),
                   ),
                   SizedBox(width: 40.w),
-                  Expanded(child: Placeholder()),
+                  const Expanded(child: SliceControl()),
                 ],
               ),
             ),
