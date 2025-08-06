@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:emayer_cutter/core/constant/stream_enum.dart';
+import 'package:emayer_cutter/core/design/size_extensions.dart';
 import 'package:emayer_cutter/feature/stream/stream_notifier.dart';
 import 'package:emayer_cutter/feature/stream/stream_screen_mixin.dart';
 import 'package:flutter/material.dart';
@@ -22,22 +23,15 @@ class _StreamScreenState extends State<StreamScreen> with StreamScreenMixin {
       backgroundColor: Theme.of(context).primaryColor,
       body: Padding(
         padding: EdgeInsets.only(
-          // left: 25,
-          left: MediaQuery.of(context).size.width * 0.013,
-          // right: 25,
-          right: MediaQuery.of(context).size.width * 0.013,
-          // top: 60,
-          top: MediaQuery.of(context).size.height * 0.055,
-          // bottom: 60,
-          bottom: MediaQuery.of(context).size.height * 0.055,
+          left: 14.w,
+          right: 14.w,
+          top: 105.h,
+          bottom: 105.h,
         ),
         child: Stack(
           children: [
             ClipRRect(
-                borderRadius: BorderRadius.circular(
-                  // 30,
-                  MediaQuery.of(context).size.width * 0.015,
-                ),
+                borderRadius: BorderRadius.circular(16.r),
                 child: GestureDetector(
                     onTap: () async {
                       if (!streamNotifierListen.isPlaying) {
@@ -87,10 +81,8 @@ class _StreamScreenState extends State<StreamScreen> with StreamScreenMixin {
                                 child: CircularProgressIndicator(),
                               )))),
             Positioned(
-                // bottom: 20,
-                bottom: MediaQuery.of(context).size.height * 0.02,
-                // left: 55,
-                left: MediaQuery.of(context).size.width * 0.028,
+                bottom: 38.h,
+                left: 59.w,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -98,28 +90,19 @@ class _StreamScreenState extends State<StreamScreen> with StreamScreenMixin {
                     Text(
                       'Top Cam',
                       style: TextStyle(
-                        // fontSize: 30,
-                        fontSize: MediaQuery.of(context).size.width * 0.0155,
+                        fontSize: 15.s,
                         color: Colors.white,
                         fontFamily: 'Roboto',
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(
-                        // top: 10,
-                        top: MediaQuery.of(context).size.height * 0.01,
-                      ),
+                      padding: EdgeInsets.only(top: 10.h),
                       child: Container(
-                        // width: 80,
-                        width: MediaQuery.of(context).size.width * 0.042,
-                        // height: 33,
-                        height: MediaQuery.of(context).size.height * 0.03,
+                        width: 45.w,
+                        height: 58.h,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(
-                            // 23,
-                            MediaQuery.of(context).size.width * 0.012,
-                          ),
+                          borderRadius: BorderRadius.circular(13.r),
                           color: streamNotifierListen.isSocketConnected
                               ? const Color.fromRGBO(33, 184, 42, 1)
                               : Colors.red[700],
@@ -129,15 +112,10 @@ class _StreamScreenState extends State<StreamScreen> with StreamScreenMixin {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             CircleAvatar(
-                              // radius: 3.5,
-                              radius:
-                                  MediaQuery.of(context).size.width * 0.0019,
+                              radius: 2.r,
                               backgroundColor: Colors.white,
                             ),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.003,
-                              // width: 5,
-                            ),
+                            SizedBox(width: 3.w),
                             Text(
                               streamNotifierListen.isSocketConnected
                                   ? "Online"
@@ -145,10 +123,7 @@ class _StreamScreenState extends State<StreamScreen> with StreamScreenMixin {
                               style: TextStyle(
                                 fontFamily: "Roboto",
                                 color: Colors.white,
-                                // fontSize: 14
-
-                                fontSize:
-                                    MediaQuery.of(context).size.width * 0.0072,
+                                fontSize: 8.sp,
                               ),
                             )
                           ],
@@ -158,8 +133,8 @@ class _StreamScreenState extends State<StreamScreen> with StreamScreenMixin {
                   ],
                 )),
             Positioned(
-              bottom: MediaQuery.of(context).size.height * 0.025,
-              right: MediaQuery.of(context).size.width * 0.013,
+              bottom: 48.h,
+              right: 14.w,
               child: PopupMenuButton(
                 itemBuilder: (context) {
                   return [
@@ -184,8 +159,8 @@ class _StreamScreenState extends State<StreamScreen> with StreamScreenMixin {
                   ];
                 },
                 child: Container(
-                  height: MediaQuery.of(context).size.height * 0.055,
-                  width: MediaQuery.of(context).size.width * 0.035,
+                  height: 106.h,
+                  width: 38.w,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     border: Border.all(
@@ -197,7 +172,7 @@ class _StreamScreenState extends State<StreamScreen> with StreamScreenMixin {
                     child: Icon(
                       Icons.more_vert_rounded,
                       color: Colors.white,
-                      size: MediaQuery.of(context).size.width * 0.0155,
+                      size: 17.s,
                     ),
                   ),
                 ),
@@ -228,10 +203,8 @@ class _StreamScreenState extends State<StreamScreen> with StreamScreenMixin {
                 opacity: streamNotifierListen.isPlaying ? 0 : 1,
                 duration: Durations.short3,
                 child: Container(
-                    // height: 135,
-                    height: MediaQuery.of(context).size.height * 0.13,
-                    // width: 135,
-                    width: MediaQuery.of(context).size.width * 0.13,
+                    height: 250.h,
+                    width: 140.w,
                     decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                         color: Color.fromRGBO(48, 57, 63, 1)),
@@ -240,14 +213,12 @@ class _StreamScreenState extends State<StreamScreen> with StreamScreenMixin {
                             ? Icon(
                                 Icons.pause,
                                 color: Colors.white,
-                                // size: 110,
-                                size: MediaQuery.of(context).size.width * 0.055,
+                                size: 59.s,
                               )
                             : Icon(
                                 Icons.play_arrow_rounded,
                                 color: Colors.white,
-                                // size: 110,
-                                size: MediaQuery.of(context).size.width * 0.055,
+                                size: 59.s,
                               ))),
               )),
             ),
