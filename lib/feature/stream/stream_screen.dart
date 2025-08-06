@@ -89,28 +89,36 @@ class _StreamScreenState extends State<StreamScreen> with StreamScreenMixin {
                     _updateLocalState();
                   }
                 },
-                child: Container(
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Colors.grey, Colors.black],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    Container(
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [Colors.grey, Colors.black],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                        ),
+                      ),
                     ),
-                  ),
-                  child: _isConnected
-                      ? imageData.isNotEmpty
-                            ? RepaintBoundary(
-                                child: Image.memory(
-                                  imageData,
-                                  gaplessPlayback: true,
-                                  alignment: Alignment.center,
-                                  filterQuality: FilterQuality.low,
-                                  width: double.infinity,
-                                  fit: BoxFit.contain,
-                                ),
-                              )
-                            : const Center(child: CircularProgressIndicator())
-                      : const Center(child: CircularProgressIndicator()),
+
+                    Center(
+                      child: _isConnected
+                          ? imageData.isNotEmpty
+                              ? RepaintBoundary(
+                                  child: Image.memory(
+                                    imageData,
+                                    gaplessPlayback: true,
+                                    alignment: Alignment.center,
+                                    filterQuality: FilterQuality.low,
+                                    width: double.infinity,
+                                    fit: BoxFit.contain,
+                                  ),
+                                )
+                              : const CircularProgressIndicator(color: Colors.white)
+                          : const CircularProgressIndicator(color: Colors.white),
+                    ),
+                  ],
                 ),
               ),
             ),
