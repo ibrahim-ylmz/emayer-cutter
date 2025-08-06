@@ -1,8 +1,8 @@
 import 'package:emayer_cutter/feature/help/help_screen.dart';
 import 'package:emayer_cutter/feature/home/home_screen.dart';
 import 'package:emayer_cutter/feature/splash/splash_screen.dart';
+import 'package:emayer_cutter/feature/stream/stream_screen.dart';
 import 'package:emayer_cutter/feature/system/system_screen.dart';
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'app_router_name.dart';
 
@@ -22,8 +22,7 @@ final GoRouter appRouter = GoRouter(
         ),
         GoRoute(
           path: AppRouterName.stream,
-          builder: (context, state) =>
-              const Scaffold(body: Center(child: Text('Stream'))),
+          builder: (context, state) => const StreamScreen(),
         ),
         GoRoute(
           path: AppRouterName.help,
