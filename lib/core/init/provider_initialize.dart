@@ -14,18 +14,10 @@ class ProviderInitialize extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (context) => ThemeNotifier(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => HomeNotifier(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => SystemNotifier(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => StreamNotifier(),
-        ),
+        ChangeNotifierProvider(create: (context) => ThemeNotifier()),
+        ChangeNotifierProvider(create: (context) => HomeNotifier()),
+        ChangeNotifierProvider(create: (context) => SystemNotifier()),
+        ChangeNotifierProvider(create: (context) => StreamNotifier()),
       ],
       child: child,
     );

@@ -14,13 +14,41 @@ class StreamScreen extends StatefulWidget {
 }
 
 class _StreamScreenState extends State<StreamScreen> with StreamScreenMixin {
+  // Local state to prevent unnecessary rebuilds
+  bool _isConnected = false;
+  bool _isPlaying = false;
+  late StreamNotifier _streamNotifier;
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize local state
+    _streamNotifier = Provider.of<StreamNotifier>(context, listen: false);
+    _isConnected = _streamNotifier.isSocketConnected;
+    _isPlaying = _streamNotifier.isPlaying;
+
+    // Add listener for targeted rebuilds
+    _streamNotifier.addListener(_updateLocalState);
+  }
+
+  void _updateLocalState() {
+    if (_isConnected != _streamNotifier.isSocketConnected ||
+        _isPlaying != _streamNotifier.isPlaying) {
+      setState(() {
+        _isConnected = _streamNotifier.isSocketConnected;
+        _isPlaying = _streamNotifier.isPlaying;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _streamNotifier.removeListener(_updateLocalState);
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final streamNotifierListen = Provider.of<StreamNotifier>(
-      context,
-      listen: true,
-    );
-    final streamNotifier = Provider.of<StreamNotifier>(context, listen: false);
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       body: Padding(
@@ -36,22 +64,29 @@ class _StreamScreenState extends State<StreamScreen> with StreamScreenMixin {
               borderRadius: BorderRadius.circular(30.r),
               child: GestureDetector(
                 onTap: () async {
-                  if (!streamNotifierListen.isPlaying) {
-                    if (!streamNotifierListen.isSocketConnected) {
+                  final streamNotifier = Provider.of<StreamNotifier>(
+                    context,
+                    listen: false,
+                  );
+                  if (!_isPlaying) {
+                    if (!_isConnected) {
                       bool response = await streamAutoStart();
                       if (response) {
                         Future.delayed(const Duration(seconds: 3), () {
                           initSocket();
                           streamNotifier.changeIsPlaying(true);
+                          _updateLocalState();
                         });
                       }
                     }
                     streamNotifier.changeIsPlaying(true);
+                    _updateLocalState();
                   } else {
                     streamClear();
                     streamAutoStop();
                     streamNotifier.changeIsSocketConnected(false);
                     streamNotifier.changeIsPlaying(false);
+                    _updateLocalState();
                   }
                 },
                 child: Container(
@@ -62,15 +97,15 @@ class _StreamScreenState extends State<StreamScreen> with StreamScreenMixin {
                       end: Alignment.bottomCenter,
                     ),
                   ),
-                  child: streamNotifierListen.isSocketConnected
+                  child: _isConnected
                       ? imageData.isNotEmpty
                             ? RepaintBoundary(
                                 child: Image.memory(
+                                  imageData,
                                   gaplessPlayback: true,
                                   alignment: Alignment.center,
-                                  filterQuality: FilterQuality.high,
+                                  filterQuality: FilterQuality.low,
                                   width: double.infinity,
-                                  imageData,
                                   fit: BoxFit.contain,
                                 ),
                               )
@@ -96,15 +131,13 @@ class _StreamScreenState extends State<StreamScreen> with StreamScreenMixin {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(
-                      top: 10.h,
-                    ),
+                    padding: EdgeInsets.only(top: 10.h),
                     child: Container(
                       width: 80.w,
                       height: 33.h,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(23.r),
-                        color: streamNotifierListen.isSocketConnected
+                        color: _isConnected
                             ? const Color.fromRGBO(33, 184, 42, 1)
                             : Colors.red[700],
                       ),
@@ -116,13 +149,9 @@ class _StreamScreenState extends State<StreamScreen> with StreamScreenMixin {
                             radius: 3.5.r,
                             backgroundColor: Colors.white,
                           ),
-                          SizedBox(
-                            width: 5.w,
-                          ),
+                          SizedBox(width: 5.w),
                           Text(
-                            streamNotifierListen.isSocketConnected
-                                ? "Online"
-                                : "Offline",
+                            _isConnected ? "Online" : "Offline",
                             style: TextStyle(
                               fontFamily: "Roboto",
                               color: Colors.white,
@@ -145,22 +174,16 @@ class _StreamScreenState extends State<StreamScreen> with StreamScreenMixin {
                     PopupMenuItem(
                       child: const Text('Stream'),
                       onTap: () {
-                        Provider.of<StreamNotifier>(
-                          context,
-                          listen: false,
-                        ).changeStreamType(StreamType.stream);
-
+                        _streamNotifier.changeStreamType(StreamType.stream);
                         streamStart();
                       },
                     ),
                     PopupMenuItem(
                       child: const Text('Stream Processed'),
                       onTap: () {
-                        Provider.of<StreamNotifier>(
-                          context,
-                          listen: false,
-                        ).changeStreamType(StreamType.streamProcessed);
-
+                        _streamNotifier.changeStreamType(
+                          StreamType.streamProcessed,
+                        );
                         streamStart();
                       },
                     ),
@@ -188,27 +211,30 @@ class _StreamScreenState extends State<StreamScreen> with StreamScreenMixin {
             ),
             GestureDetector(
               onTap: () async {
-                if (!streamNotifierListen.isPlaying) {
-                  if (!streamNotifierListen.isSocketConnected) {
+                if (!_isPlaying) {
+                  if (!_isConnected) {
                     bool response = await streamAutoStart();
                     if (response) {
                       Future.delayed(const Duration(seconds: 3), () {
                         initSocket();
-                        streamNotifier.changeIsPlaying(true);
+                        _streamNotifier.changeIsPlaying(true);
+                        _updateLocalState();
                       });
                     }
                   }
-                  streamNotifier.changeIsPlaying(true);
+                  _streamNotifier.changeIsPlaying(true);
+                  _updateLocalState();
                 } else {
                   streamClear();
                   streamAutoStop();
-                  streamNotifier.changeIsSocketConnected(false);
-                  streamNotifier.changeIsPlaying(false);
+                  _streamNotifier.changeIsSocketConnected(false);
+                  _streamNotifier.changeIsPlaying(false);
+                  _updateLocalState();
                 }
               },
               child: Center(
                 child: AnimatedOpacity(
-                  opacity: streamNotifierListen.isPlaying ? 0 : 1,
+                  opacity: _isPlaying ? 0.0 : 1.0,
                   duration: Durations.short3,
                   child: Container(
                     height: 135.h,
@@ -218,17 +244,11 @@ class _StreamScreenState extends State<StreamScreen> with StreamScreenMixin {
                       color: Color.fromRGBO(48, 57, 63, 1),
                     ),
                     child: Center(
-                      child: streamNotifierListen.isPlaying
-                          ? Icon(
-                              Icons.pause,
-                              color: Colors.white,
-                              size: 110.s,
-                            )
-                          : Icon(
-                              Icons.play_arrow_rounded,
-                              color: Colors.white,
-                              size: 110.s,
-                            ),
+                      child: Icon(
+                        _isPlaying ? Icons.pause : Icons.play_arrow_rounded,
+                        color: Colors.white,
+                        size: 110.s,
+                      ),
                     ),
                   ),
                 ),

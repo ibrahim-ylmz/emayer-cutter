@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
 
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:typed_data';
@@ -13,16 +14,12 @@ import 'package:provider/provider.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 mixin StreamScreenMixin on State<StreamScreen> {
-  late StreamNotifier stream = Provider.of<StreamNotifier>(
-    context,
-    listen: false,
-  );
+  // Remove problematic late Provider declarations
+  // These will be accessed directly in methods when needed
 
-  late StreamNotifier streamListen = Provider.of<StreamNotifier>(
-    context,
-    listen: true,
-  );
-
+  // Reference to the StreamNotifier
+  late StreamNotifier _streamNotifier;
+  
   // Use centralized API service
   final ApiService _apiService = ApiService();
   
@@ -77,9 +74,16 @@ mixin StreamScreenMixin on State<StreamScreen> {
   // Create unique name/ID for this socket - constant across all instances
   final String streamSocketId = 'stream_socket';
 
+  // Throttling mechanism for frame rate control
+  Timer? _throttleTimer;
+  final Duration _throttleDuration = const Duration(milliseconds: 33); // ~30 FPS
+  
   @override
   void initState() {
     super.initState();
+    
+    // Initialize the StreamNotifier reference
+    _streamNotifier = Provider.of<StreamNotifier>(context, listen: false);
 
     log('Creating new stream socket with ID: $streamSocketId');
     // Using completely unique configuration for the stream socket
@@ -95,25 +99,25 @@ mixin StreamScreenMixin on State<StreamScreen> {
       }, // Unique identifier
       'extraHeaders': {'X-Client-Type': 'stream'},
     });
-  }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    if (streamListen.isSocketConnected) {
+    // If the stream was active before, resume it automatically.
+    if (_streamNotifier.isPlaying) {
+      log('Stream was active, resuming connection...');
       initSocket();
     }
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Remove automatic socket initialization to prevent unnecessary connections
+  }
+
+  @override
   void dispose() {
-    log('Disposing stream socket with ID: $streamSocketId');
-    if (socket.connected) {
-      socket.disconnect();
-    }
-    socket.clearListeners();
-    socket.dispose();
+    log('Disposing stream screen...');
+    streamClear(); // Fully terminate the socket
+    _throttleTimer?.cancel();
     super.dispose();
   }
 
@@ -122,24 +126,34 @@ mixin StreamScreenMixin on State<StreamScreen> {
     socket.connect();
     socket.onConnect((_) {
       log('Stream socket connection established (ID: $streamSocketId)');
-      stream.changeIsSocketConnected(true);
+      _streamNotifier.changeIsSocketConnected(true);
     });
 
-    socket.on(stream.streamType.value, (data) {
+    socket.on(_streamNotifier.streamType.value, (data) {
+      // Throttled image update to prevent excessive frame refreshes
       if (data == previousBase64) return;
-      // log('Convert Base64 to Image');
       previousBase64 = data;
-      convertBase64ToImage(data);
+      
+      // Cancel previous timer if exists
+      _throttleTimer?.cancel();
+      
+      // Set new timer for throttled update
+      _throttleTimer = Timer(_throttleDuration, () {
+        convertBase64ToImage(data);
+      });
     });
-    socket.onDisconnect(
-      (_) => log('Stream socket disconnected (ID: $streamSocketId)'),
-    );
-    socket.onConnectError(
-      (err) => log('Stream socket error (ID: $streamSocketId): $err'),
-    );
-    socket.onError(
-      (err) => log('Stream socket error (ID: $streamSocketId): $err'),
-    );
+    
+    socket.onDisconnect((_) {
+      log('Stream socket disconnected (ID: $streamSocketId)');
+      _throttleTimer?.cancel();
+      // Only update status if the user is not intentionally keeping the stream alive.
+      if (!_streamNotifier.isPlaying) {
+        _streamNotifier.changeIsSocketConnected(false);
+      }
+    });
+    
+    socket.onConnectError((err) => log('Stream socket error (ID: $streamSocketId): $err'));
+    socket.onError((err) => log('Stream socket error (ID: $streamSocketId): $err'));
   }
 
   void convertBase64ToImage(String base64String) {
@@ -150,27 +164,24 @@ mixin StreamScreenMixin on State<StreamScreen> {
   }
 
   void streamClear() {
-    log('Clearing stream socket with ID: $streamSocketId');
-    if (socket.connected) {
-      socket.disconnect();
-    }
-    socket.clearListeners();
-    // Avoid calling close() and destroy() which can affect other sockets
-    imageData = Uint8List(0);
+    log('Clearing and completely disposing of stream socket with ID: $streamSocketId');
+    socket.clearListeners(); // Remove all event listeners
+    socket.disconnect();
+    socket.dispose(); // This is crucial to stop background activity
   }
 
   void streamStart() {
-    if (!streamListen.isSocketConnected) {
+    if (!_streamNotifier.isSocketConnected) {
       initSocket();
     } else {
       streamClear();
 
-      stream.changeIsPlaying(false);
-      stream.changeIsSocketConnected(false);
+      _streamNotifier.changeIsPlaying(false);
+      _streamNotifier.changeIsSocketConnected(false);
 
       Future.delayed(const Duration(milliseconds: 500), () {
         initSocket();
-        stream.changeIsPlaying(true);
+        _streamNotifier.changeIsPlaying(true);
       });
     }
   }

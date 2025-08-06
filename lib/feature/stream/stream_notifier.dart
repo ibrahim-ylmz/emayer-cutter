@@ -6,20 +6,28 @@ class StreamNotifier with ChangeNotifier {
   StreamType get streamType => _streamType;
   void changeStreamType(streamType) {
     _streamType = streamType;
-    notifyListeners();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      notifyListeners();
+    });
   }
 
   bool _isSocketConnected = false;
   bool get isSocketConnected => _isSocketConnected;
   void changeIsSocketConnected(bool value) {
+    if (_isSocketConnected == value) return; // Prevent unnecessary notifications
     _isSocketConnected = value;
-    notifyListeners();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      notifyListeners();
+    });
   }
 
   bool _isPlaying = false;
   bool get isPlaying => _isPlaying;
   void changeIsPlaying(bool value) {
+    if (_isPlaying == value) return; // Prevent unnecessary notifications
     _isPlaying = value;
-    notifyListeners();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      notifyListeners();
+    });
   }
 }

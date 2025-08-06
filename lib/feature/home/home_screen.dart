@@ -9,10 +9,10 @@ import 'package:emayer_cutter/feature/home/widgets/drawer_info.dart';
 import 'package:emayer_cutter/feature/home/widgets/drawer_up_button.dart';
 import 'package:emayer_cutter/feature/home/widgets/top_bar.dart';
 import 'package:emayer_cutter/feature/lock/lock_screen.dart';
+import 'package:emayer_cutter/feature/stream/stream_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-
 import 'package:emayer_cutter/core/navigation/route_title_mapper.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -79,10 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
                 Padding(
-                  padding: EdgeInsets.only(
-                    right: 20.w,
-                    left: 20.w,
-                  ),
+                  padding: EdgeInsets.only(right: 20.w, left: 20.w),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -103,11 +100,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           context.go(AppRouterName.stream);
                         },
                         isStreaming: true,
-                        isStreamingOk: true,
-
-                        // context
-                        //     .watch<StreamNotifier>()
-                        //     .isSocketConnected,
+                        isStreamingOk: context
+                            .watch<StreamNotifier>()
+                            .isSocketConnected,
                         isEnable:
                             appRouter.state.fullPath == AppRouterName.stream,
                       ),
@@ -130,10 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(
-                    right: 20.w,
-                    left: 20.w,
-                  ),
+                  padding: EdgeInsets.only(right: 20.w, left: 20.w),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.start,
