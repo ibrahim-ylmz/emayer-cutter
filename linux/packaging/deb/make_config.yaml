@@ -1,0 +1,37 @@
+display_name: emayer
+package_name: emayerdev
+
+maintainer:
+  name: Emayer
+  email: emayer@xyz.com
+
+priority: optional
+
+section: x11
+
+installed_size: 30700
+
+dependencies:
+  - libgtk-3-0
+  - libblkid1
+  - liblzma5
+  - pkg-config
+
+essential: false
+
+icon: lib/assets/logo/ailogo.png
+
+postuninstall_scripts:
+  - echo "Sorry to see you go."
+
+keywords:
+  - API
+  - API Client
+
+generic_name: API Client
+
+categories:
+  - Development
+  - Utility
+
+startup_notify: true
