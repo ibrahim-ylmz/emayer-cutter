@@ -21,16 +21,15 @@ class _StreamScreenState extends State<StreamScreen> with StreamScreenMixin {
     final streamNotifier = Provider.of<StreamNotifier>(context, listen: false);
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
-      body: Center(
-        child: Container(
-          width: double.infinity,
-          height: 1400.h, // Limited height for portrait
-          margin: EdgeInsets.symmetric(
-            horizontal: 20.w,
-            vertical: 60.h,
-          ),
-          child: Stack(
-            children: [
+      body: Padding(
+        padding: EdgeInsets.only(
+          left: 14.w,
+          right: 14.w,
+          top: 105.h,
+          bottom: 105.h,
+        ),
+        child: Stack(
+          children: [
             ClipRRect(
                 borderRadius: BorderRadius.circular(16.r),
                 child: GestureDetector(
@@ -56,7 +55,7 @@ class _StreamScreenState extends State<StreamScreen> with StreamScreenMixin {
                     child: Center(
                       child: Container(
                           width: double.infinity,
-                          height: 800.h, // Limited height for video content
+                          height: 1000.h,
                           decoration: const BoxDecoration(
                             gradient: LinearGradient(
                                 colors: [
@@ -86,7 +85,7 @@ class _StreamScreenState extends State<StreamScreen> with StreamScreenMixin {
                                 )),
                     ))),
             Positioned(
-                bottom: 38.h,
+                bottom: 50.h,
                 left: 59.w,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -138,7 +137,7 @@ class _StreamScreenState extends State<StreamScreen> with StreamScreenMixin {
                   ],
                 )),
             Positioned(
-              bottom: 48.h,
+              bottom: 70.h,
               right: 14.w,
               child: PopupMenuButton(
                 itemBuilder: (context) {
@@ -208,8 +207,8 @@ class _StreamScreenState extends State<StreamScreen> with StreamScreenMixin {
                 opacity: streamNotifierListen.isPlaying ? 0 : 1,
                 duration: Durations.short3,
                 child: Container(
-                    height: 120.h,
-                    width: 120.w,
+                    height: 250.h,
+                    width: 140.w,
                     decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                         color: Color.fromRGBO(48, 57, 63, 1)),
@@ -218,17 +217,16 @@ class _StreamScreenState extends State<StreamScreen> with StreamScreenMixin {
                             ? Icon(
                                 Icons.pause,
                                 color: Colors.white,
-                                size: 48.s,
+                                size: 59.s,
                               )
                             : Icon(
                                 Icons.play_arrow_rounded,
                                 color: Colors.white,
-                                size: 48.s,
+                                size: 59.s,
                               ))),
               )),
             ),
-            ],
-          ),
+          ],
         ),
       ),
     );
