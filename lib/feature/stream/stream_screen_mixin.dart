@@ -1,11 +1,10 @@
 // ignore_for_file: avoid_print
 
-import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:typed_data';
 
-import 'package:emayer_cutter/core/service/api_service.dart';
+import 'package:dio/dio.dart';
 import 'package:emayer_cutter/feature/stream/stream_notifier.dart';
 import 'package:emayer_cutter/feature/stream/stream_screen.dart';
 import 'package:flutter/material.dart';
@@ -14,53 +13,46 @@ import 'package:provider/provider.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 mixin StreamScreenMixin on State<StreamScreen> {
-  // Remove problematic late Provider declarations
-  // These will be accessed directly in methods when needed
+  late StreamNotifier stream = Provider.of<StreamNotifier>(
+    context,
+    listen: false,
+  );
 
-  // Reference to the StreamNotifier
-  late StreamNotifier _streamNotifier;
-  
-  // Use centralized API service
-  final ApiService _apiService = ApiService();
-  
-  // Stream specific endpoints
-  final String autoActionEndpoint = '/v1/api/auto_action_app';
+  late StreamNotifier streamListen = Provider.of<StreamNotifier>(
+    context,
+    listen: true,
+  );
+
+  final String baseUrl = 'http://127.0.0.1:5000';
+  final String autoStart = '/v1/api/auto_action_app';
+  final String autoStop = '/v1/api/auto_action_app';
+  final dio = Dio();
 
   Future<bool> streamAutoStart() async {
-    try {
-      final response = await _apiService.post(
-        autoActionEndpoint,
-        data: {
-          "action": "start",
-          "which_app": ["all"],
-        },
-      );
-      if (response.statusCode == 200) {
-        log('Stream Auto Start Success: ${response.data}');
-        return true;
-      } else {
-        log('Stream Auto Start Failed: ${response.statusCode}');
-        return false;
-      }
-    } catch (e) {
-      log('Stream Auto Start Error: $e');
+    final response = await dio.post(
+      '$baseUrl$autoStart',
+      data: {
+        "action": "start",
+        "which_app": ["all"],
+      },
+    );
+    if (response.statusCode == 200) {
+      log('Auto Start ${response.data}');
+      return true;
+    } else {
       return false;
     }
   }
 
-  Future<void> streamAutoStop() async {
-    try {
-      final response = await _apiService.post(
-        autoActionEndpoint,
-        data: {
-          "action": "stop",
-          "which_app": ["all"],
-        },
-      );
-      log('Stream Auto Stop Success: ${response.data}');
-    } catch (e) {
-      log('Stream Auto Stop Error: $e');
-    }
+  void streamAutoStop() async {
+    final response = await dio.post(
+      '$baseUrl$autoStop',
+      data: {
+        "action": "stop",
+        "which_app": ["all"],
+      },
+    );
+    log('Auto Stop ${response.data}');
   }
 
   // bool isPlaying = false;
@@ -74,20 +66,13 @@ mixin StreamScreenMixin on State<StreamScreen> {
   // Create unique name/ID for this socket - constant across all instances
   final String streamSocketId = 'stream_socket';
 
-  // Throttling mechanism for frame rate control
-  Timer? _throttleTimer;
-  final Duration _throttleDuration = const Duration(milliseconds: 33); // ~30 FPS
-  
   @override
   void initState() {
     super.initState();
-    
-    // Initialize the StreamNotifier reference
-    _streamNotifier = Provider.of<StreamNotifier>(context, listen: false);
 
     log('Creating new stream socket with ID: $streamSocketId');
     // Using completely unique configuration for the stream socket
-    socket = IO.io(_apiService.baseUrl, <String, dynamic>{
+    socket = IO.io(baseUrl, <String, dynamic>{
       'autoConnect': false,
       'transports': ['websocket'],
       'forceNew': true,
@@ -99,25 +84,25 @@ mixin StreamScreenMixin on State<StreamScreen> {
       }, // Unique identifier
       'extraHeaders': {'X-Client-Type': 'stream'},
     });
-
-    // If the stream was active before, resume it automatically.
-    if (_streamNotifier.isPlaying) {
-      log('Stream was active, resuming connection...');
-      initSocket();
-    }
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // Remove automatic socket initialization to prevent unnecessary connections
+
+    if (streamListen.isSocketConnected) {
+      initSocket();
+    }
   }
 
   @override
   void dispose() {
-    log('Disposing stream screen...');
-    streamClear(); // Fully terminate the socket
-    _throttleTimer?.cancel();
+    log('Disposing stream socket with ID: $streamSocketId');
+    if (socket.connected) {
+      socket.disconnect();
+    }
+    socket.clearListeners();
+    socket.dispose();
     super.dispose();
   }
 
@@ -126,34 +111,24 @@ mixin StreamScreenMixin on State<StreamScreen> {
     socket.connect();
     socket.onConnect((_) {
       log('Stream socket connection established (ID: $streamSocketId)');
-      _streamNotifier.changeIsSocketConnected(true);
+      stream.changeIsSocketConnected(true);
     });
 
-    socket.on(_streamNotifier.streamType.value, (data) {
-      // Throttled image update to prevent excessive frame refreshes
+    socket.on(stream.streamType.value, (data) {
       if (data == previousBase64) return;
+      // log('Convert Base64 to Image');
       previousBase64 = data;
-      
-      // Cancel previous timer if exists
-      _throttleTimer?.cancel();
-      
-      // Set new timer for throttled update
-      _throttleTimer = Timer(_throttleDuration, () {
-        convertBase64ToImage(data);
-      });
+      convertBase64ToImage(data);
     });
-    
-    socket.onDisconnect((_) {
-      log('Stream socket disconnected (ID: $streamSocketId)');
-      _throttleTimer?.cancel();
-      // Only update status if the user is not intentionally keeping the stream alive.
-      if (!_streamNotifier.isPlaying) {
-        _streamNotifier.changeIsSocketConnected(false);
-      }
-    });
-    
-    socket.onConnectError((err) => log('Stream socket error (ID: $streamSocketId): $err'));
-    socket.onError((err) => log('Stream socket error (ID: $streamSocketId): $err'));
+    socket.onDisconnect(
+      (_) => log('Stream socket disconnected (ID: $streamSocketId)'),
+    );
+    socket.onConnectError(
+      (err) => log('Stream socket error (ID: $streamSocketId): $err'),
+    );
+    socket.onError(
+      (err) => log('Stream socket error (ID: $streamSocketId): $err'),
+    );
   }
 
   void convertBase64ToImage(String base64String) {
@@ -164,24 +139,27 @@ mixin StreamScreenMixin on State<StreamScreen> {
   }
 
   void streamClear() {
-    log('Clearing and completely disposing of stream socket with ID: $streamSocketId');
-    socket.clearListeners(); // Remove all event listeners
-    socket.disconnect();
-    socket.dispose(); // This is crucial to stop background activity
+    log('Clearing stream socket with ID: $streamSocketId');
+    if (socket.connected) {
+      socket.disconnect();
+    }
+    socket.clearListeners();
+    // Avoid calling close() and destroy() which can affect other sockets
+    imageData = Uint8List(0);
   }
 
   void streamStart() {
-    if (!_streamNotifier.isSocketConnected) {
+    if (!streamListen.isSocketConnected) {
       initSocket();
     } else {
       streamClear();
 
-      _streamNotifier.changeIsPlaying(false);
-      _streamNotifier.changeIsSocketConnected(false);
+      stream.changeIsPlaying(false);
+      stream.changeIsSocketConnected(false);
 
       Future.delayed(const Duration(milliseconds: 500), () {
         initSocket();
-        _streamNotifier.changeIsPlaying(true);
+        stream.changeIsPlaying(true);
       });
     }
   }

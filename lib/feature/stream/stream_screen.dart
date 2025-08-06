@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:emayer_cutter/core/constant/stream_enum.dart';
-import 'package:emayer_cutter/core/design/size_extensions.dart';
 import 'package:emayer_cutter/feature/stream/stream_notifier.dart';
 import 'package:emayer_cutter/feature/stream/stream_screen_mixin.dart';
 import 'package:flutter/material.dart';
@@ -14,192 +13,179 @@ class StreamScreen extends StatefulWidget {
 }
 
 class _StreamScreenState extends State<StreamScreen> with StreamScreenMixin {
-  // Local state to prevent unnecessary rebuilds
-  bool _isConnected = false;
-  bool _isPlaying = false;
-  late StreamNotifier _streamNotifier;
-
-  @override
-  void initState() {
-    super.initState();
-    // Initialize local state
-    _streamNotifier = Provider.of<StreamNotifier>(context, listen: false);
-    _isConnected = _streamNotifier.isSocketConnected;
-    _isPlaying = _streamNotifier.isPlaying;
-
-    // Add listener for targeted rebuilds
-    _streamNotifier.addListener(_updateLocalState);
-  }
-
-  void _updateLocalState() {
-    if (_isConnected != _streamNotifier.isSocketConnected ||
-        _isPlaying != _streamNotifier.isPlaying) {
-      setState(() {
-        _isConnected = _streamNotifier.isSocketConnected;
-        _isPlaying = _streamNotifier.isPlaying;
-      });
-    }
-  }
-
-  @override
-  void dispose() {
-    _streamNotifier.removeListener(_updateLocalState);
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
+    final streamNotifierListen =
+        Provider.of<StreamNotifier>(context, listen: true);
+    final streamNotifier = Provider.of<StreamNotifier>(context, listen: false);
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       body: Padding(
         padding: EdgeInsets.only(
-          left: 25.w,
-          right: 25.w,
-          top: 60.h,
-          bottom: 60.h,
+          // left: 25,
+          left: MediaQuery.of(context).size.width * 0.013,
+          // right: 25,
+          right: MediaQuery.of(context).size.width * 0.013,
+          // top: 60,
+          top: MediaQuery.of(context).size.height * 0.055,
+          // bottom: 60,
+          bottom: MediaQuery.of(context).size.height * 0.055,
         ),
         child: Stack(
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(30.r),
-              child: GestureDetector(
-                onTap: () async {
-                  final streamNotifier = Provider.of<StreamNotifier>(
-                    context,
-                    listen: false,
-                  );
-                  if (!_isPlaying) {
-                    if (!_isConnected) {
-                      bool response = await streamAutoStart();
-                      if (response) {
-                        Future.delayed(const Duration(seconds: 3), () {
-                          initSocket();
-                          streamNotifier.changeIsPlaying(true);
-                          _updateLocalState();
-                        });
+                borderRadius: BorderRadius.circular(
+                  // 30,
+                  MediaQuery.of(context).size.width * 0.015,
+                ),
+                child: GestureDetector(
+                    onTap: () async {
+                      if (!streamNotifierListen.isPlaying) {
+                        if (!streamNotifierListen.isSocketConnected) {
+                          bool response = await streamAutoStart();
+                          if (response) {
+                            Future.delayed(const Duration(seconds: 3), () {
+                              initSocket();
+                              streamNotifier.changeIsPlaying(true);
+                            });
+                          }
+                        }
+                        streamNotifier.changeIsPlaying(true);
+                      } else {
+                        streamClear();
+                        streamAutoStop();
+                        streamNotifier.changeIsSocketConnected(false);
+                        streamNotifier.changeIsPlaying(false);
                       }
-                    }
-                    streamNotifier.changeIsPlaying(true);
-                    _updateLocalState();
-                  } else {
-                    streamClear();
-                    streamAutoStop();
-                    streamNotifier.changeIsSocketConnected(false);
-                    streamNotifier.changeIsPlaying(false);
-                    _updateLocalState();
-                  }
-                },
-                child: Stack(
-                  fit: StackFit.expand,
+                    },
+                    child: Container(
+                        decoration: const BoxDecoration(
+                          gradient: LinearGradient(
+                              colors: [
+                                Colors.grey,
+                                Colors.black,
+                              ],
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter),
+                        ),
+                        child: streamNotifierListen.isSocketConnected
+                            ? imageData.isNotEmpty
+                                ? RepaintBoundary(
+                                    child: Image.memory(
+                                      gaplessPlayback: true,
+                                      alignment: Alignment.center,
+                                      filterQuality: FilterQuality.high,
+                                      width: double.infinity,
+                                      imageData,
+                                      fit: BoxFit.contain,
+                                    ),
+                                  )
+                                : const Center(
+                                    child: CircularProgressIndicator(),
+                                  )
+                            : const Center(
+                                child: CircularProgressIndicator(),
+                              )))),
+            Positioned(
+                // bottom: 20,
+                bottom: MediaQuery.of(context).size.height * 0.02,
+                // left: 55,
+                left: MediaQuery.of(context).size.width * 0.028,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
-                      decoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [Colors.grey, Colors.black],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
+                    Text(
+                      'Top Cam',
+                      style: TextStyle(
+                        // fontSize: 30,
+                        fontSize: MediaQuery.of(context).size.width * 0.0155,
+                        color: Colors.white,
+                        fontFamily: 'Roboto',
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                        // top: 10,
+                        top: MediaQuery.of(context).size.height * 0.01,
+                      ),
+                      child: Container(
+                        // width: 80,
+                        width: MediaQuery.of(context).size.width * 0.042,
+                        // height: 33,
+                        height: MediaQuery.of(context).size.height * 0.03,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(
+                            // 23,
+                            MediaQuery.of(context).size.width * 0.012,
+                          ),
+                          color: streamNotifierListen.isSocketConnected
+                              ? const Color.fromRGBO(33, 184, 42, 1)
+                              : Colors.red[700],
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CircleAvatar(
+                              // radius: 3.5,
+                              radius:
+                                  MediaQuery.of(context).size.width * 0.0019,
+                              backgroundColor: Colors.white,
+                            ),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.003,
+                              // width: 5,
+                            ),
+                            Text(
+                              streamNotifierListen.isSocketConnected
+                                  ? "Online"
+                                  : "Offline",
+                              style: TextStyle(
+                                fontFamily: "Roboto",
+                                color: Colors.white,
+                                // fontSize: 14
+
+                                fontSize:
+                                    MediaQuery.of(context).size.width * 0.0072,
+                              ),
+                            )
+                          ],
                         ),
                       ),
                     ),
-
-                    Center(
-                      child: _isConnected
-                          ? imageData.isNotEmpty
-                              ? RepaintBoundary(
-                                  child: Image.memory(
-                                    imageData,
-                                    gaplessPlayback: true,
-                                    alignment: Alignment.center,
-                                    filterQuality: FilterQuality.low,
-                                    width: double.infinity,
-                                    fit: BoxFit.contain,
-                                  ),
-                                )
-                              : const CircularProgressIndicator(color: Colors.white)
-                          : const CircularProgressIndicator(color: Colors.white),
-                    ),
                   ],
-                ),
-              ),
-            ),
+                )),
             Positioned(
-              bottom: 20.h,
-              left: 55.w,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Top Cam',
-                    style: TextStyle(
-                      fontSize: 30.sp,
-                      color: Colors.white,
-                      fontFamily: 'Roboto',
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 10.h),
-                    child: Container(
-                      width: 80.w,
-                      height: 33.h,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(23.r),
-                        color: _isConnected
-                            ? const Color.fromRGBO(33, 184, 42, 1)
-                            : Colors.red[700],
-                      ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          CircleAvatar(
-                            radius: 3.5.r,
-                            backgroundColor: Colors.white,
-                          ),
-                          SizedBox(width: 5.w),
-                          Text(
-                            _isConnected ? "Online" : "Offline",
-                            style: TextStyle(
-                              fontFamily: "Roboto",
-                              color: Colors.white,
-                              fontSize: 14.sp,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Positioned(
-              bottom: 25.h,
-              right: 13.w,
+              bottom: MediaQuery.of(context).size.height * 0.025,
+              right: MediaQuery.of(context).size.width * 0.013,
               child: PopupMenuButton(
                 itemBuilder: (context) {
                   return [
                     PopupMenuItem(
                       child: const Text('Stream'),
                       onTap: () {
-                        _streamNotifier.changeStreamType(StreamType.stream);
+                        Provider.of<StreamNotifier>(context, listen: false)
+                            .changeStreamType(StreamType.stream);
+
                         streamStart();
                       },
                     ),
                     PopupMenuItem(
                       child: const Text('Stream Processed'),
                       onTap: () {
-                        _streamNotifier.changeStreamType(
-                          StreamType.streamProcessed,
-                        );
+                        Provider.of<StreamNotifier>(context, listen: false)
+                            .changeStreamType(StreamType.streamProcessed);
+
                         streamStart();
                       },
                     ),
                   ];
                 },
                 child: Container(
-                  height: 55.h,
-                  width: 35.w,
+                  height: MediaQuery.of(context).size.height * 0.055,
+                  width: MediaQuery.of(context).size.width * 0.035,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     border: Border.all(
@@ -211,7 +197,7 @@ class _StreamScreenState extends State<StreamScreen> with StreamScreenMixin {
                     child: Icon(
                       Icons.more_vert_rounded,
                       color: Colors.white,
-                      size: 15.s,
+                      size: MediaQuery.of(context).size.width * 0.0155,
                     ),
                   ),
                 ),
@@ -219,48 +205,51 @@ class _StreamScreenState extends State<StreamScreen> with StreamScreenMixin {
             ),
             GestureDetector(
               onTap: () async {
-                if (!_isPlaying) {
-                  if (!_isConnected) {
+                if (!streamNotifierListen.isPlaying) {
+                  if (!streamNotifierListen.isSocketConnected) {
                     bool response = await streamAutoStart();
                     if (response) {
                       Future.delayed(const Duration(seconds: 3), () {
                         initSocket();
-                        _streamNotifier.changeIsPlaying(true);
-                        _updateLocalState();
+                        streamNotifier.changeIsPlaying(true);
                       });
                     }
                   }
-                  _streamNotifier.changeIsPlaying(true);
-                  _updateLocalState();
+                  streamNotifier.changeIsPlaying(true);
                 } else {
                   streamClear();
                   streamAutoStop();
-                  _streamNotifier.changeIsSocketConnected(false);
-                  _streamNotifier.changeIsPlaying(false);
-                  _updateLocalState();
+                  streamNotifier.changeIsSocketConnected(false);
+                  streamNotifier.changeIsPlaying(false);
                 }
               },
               child: Center(
-                child: AnimatedOpacity(
-                  opacity: _isPlaying ? 0.0 : 1.0,
-                  duration: Durations.short3,
-                  child: Container(
-                    height: 135.h,
-                    width: 135.w,
+                  child: AnimatedOpacity(
+                opacity: streamNotifierListen.isPlaying ? 0 : 1,
+                duration: Durations.short3,
+                child: Container(
+                    // height: 135,
+                    height: MediaQuery.of(context).size.height * 0.13,
+                    // width: 135,
+                    width: MediaQuery.of(context).size.width * 0.13,
                     decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Color.fromRGBO(48, 57, 63, 1),
-                    ),
+                        shape: BoxShape.circle,
+                        color: Color.fromRGBO(48, 57, 63, 1)),
                     child: Center(
-                      child: Icon(
-                        _isPlaying ? Icons.pause : Icons.play_arrow_rounded,
-                        color: Colors.white,
-                        size: 110.s,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+                        child: streamNotifierListen.isPlaying
+                            ? Icon(
+                                Icons.pause,
+                                color: Colors.white,
+                                // size: 110,
+                                size: MediaQuery.of(context).size.width * 0.055,
+                              )
+                            : Icon(
+                                Icons.play_arrow_rounded,
+                                color: Colors.white,
+                                // size: 110,
+                                size: MediaQuery.of(context).size.width * 0.055,
+                              ))),
+              )),
             ),
           ],
         ),
