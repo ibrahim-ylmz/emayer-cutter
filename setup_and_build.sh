@@ -50,8 +50,8 @@ main() {
     print_status "Running Flutter installation script..."
     bash ./install_flutter_linux.sh
     
-    # Source the updated PATH to make Flutter available in current session
-    source ~/.bashrc
+    # Add Flutter to PATH for current session
+    export PATH="$PATH:$HOME/development/flutter/bin"
     
     # Verify Flutter is available
     if ! command -v flutter >/dev/null 2>&1; then
