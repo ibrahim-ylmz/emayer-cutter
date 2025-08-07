@@ -77,7 +77,7 @@ check_config_files() {
     local missing_files=false
     
     # Check distribute_options.yaml
-    if [ -f "../distribute_options.yaml" ]; then
+    if [ -f "distribute_options.yaml" ]; then
         print_success "distribute_options.yaml found - using existing configuration"
     else
         print_error "distribute_options.yaml not found! Please create this file first."
@@ -85,7 +85,7 @@ check_config_files() {
     fi
     
     # Check make_config.yaml for DEB packaging
-    if [ -f "../linux/packaging/deb/make_config.yaml" ]; then
+    if [ -f "linux/packaging/deb/make_config.yaml" ]; then
         print_success "make_config.yaml found - using existing DEB configuration"
     else
         print_error "linux/packaging/deb/make_config.yaml not found! Please create this file first."
