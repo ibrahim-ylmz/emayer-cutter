@@ -1,16 +1,9 @@
-# emayer_cutter
+## Fastforge Linux Otomasyon Scriptini Çalıştırmak
 
-A new Flutter project.
+Fastforge kullanarak Flutter uygulamalarını Linux'ta paketleme ve dağıtma iş akışını otomatikleştirmek için aşağıdaki komutu kullanın:
 
-## Getting Started
+```bash
+sh fastforge_linux_automation.sh
+```
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Bu script Flutter 3.32.8, Dart 3.8.1 ve Fastforge 0.6.2 için oluşturulmuştur.
