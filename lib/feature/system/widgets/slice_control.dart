@@ -12,7 +12,12 @@ class _SliceControlState extends State<SliceControl> {
   int horizontalSlices = 0;
   int verticalSlices = 0;
 
-  void _showNumberPad(BuildContext context, String title, int currentValue, Function(int) onChanged) {
+  void _showNumberPad(
+    BuildContext context,
+    String title,
+    int currentValue,
+    Function(int) onChanged,
+  ) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -47,48 +52,41 @@ class _SliceControlState extends State<SliceControl> {
           _buildInputField(
             'Horizontal Slices',
             horizontalSlices,
-            () => _showNumberPad(context, 'Horizontal Slices', horizontalSlices, (value) {
-              setState(() {
-                horizontalSlices = value;
-              });
-            }),
+            () => _showNumberPad(
+              context,
+              'Horizontal Slices',
+              horizontalSlices,
+              (value) {
+                setState(() {
+                  horizontalSlices = value;
+                });
+              },
+            ),
           ),
-          
+
           SizedBox(height: 20.h),
-          
+
           // Vertical Slices Input
           _buildInputField(
             'Vertical Slices',
             verticalSlices,
-            () => _showNumberPad(context, 'Vertical Slices', verticalSlices, (value) {
+            () => _showNumberPad(context, 'Vertical Slices', verticalSlices, (
+              value,
+            ) {
               setState(() {
                 verticalSlices = value;
               });
             }),
           ),
-          
+
           SizedBox(height: 30.h),
-          
+
           // Action Buttons
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              _buildActionButton(
-                'Go Center',
-                Icons.center_focus_strong,
-                () {
-                  // Go Center action
-                  print('Go Center pressed');
-                },
-              ),
-              _buildActionButton(
-                'Camera View',
-                Icons.camera_alt,
-                () {
-                  // Camera View action
-                  print('Camera View pressed');
-                },
-              ),
+              _buildActionButton('Go Center', Icons.center_focus_strong, () {}),
+              _buildActionButton('Camera View', Icons.camera_alt, () {}),
             ],
           ),
         ],
@@ -121,7 +119,7 @@ class _SliceControlState extends State<SliceControl> {
               color: Theme.of(context).colorScheme.secondaryContainer,
               borderRadius: BorderRadius.circular(12.r),
               border: Border.all(
-                color: Theme.of(context).colorScheme.outline.withOpacity(0.3),
+                color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.3),
                 width: 1,
               ),
             ),
@@ -139,7 +137,7 @@ class _SliceControlState extends State<SliceControl> {
                 ),
                 Icon(
                   Icons.keyboard,
-                  color: Theme.of(context).colorScheme.onError.withOpacity(0.6),
+                  color: Theme.of(context).colorScheme.onError.withValues(alpha: 0.6),
                   size: 20.s,
                 ),
               ],
@@ -150,7 +148,11 @@ class _SliceControlState extends State<SliceControl> {
     );
   }
 
-  Widget _buildActionButton(String label, IconData icon, VoidCallback onPressed) {
+  Widget _buildActionButton(
+    String label,
+    IconData icon,
+    VoidCallback onPressed,
+  ) {
     return ElevatedButton.icon(
       onPressed: onPressed,
       icon: Icon(icon, size: 20.s),
@@ -236,9 +238,7 @@ class _NumberPadDialogState extends State<NumberPadDialog> {
   Widget build(BuildContext context) {
     return Dialog(
       backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20.r),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.r)),
       child: Container(
         width: 300.w,
         padding: EdgeInsets.all(20.w),
@@ -255,9 +255,9 @@ class _NumberPadDialogState extends State<NumberPadDialog> {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            
+
             SizedBox(height: 20.h),
-            
+
             // Display
             Container(
               width: double.infinity,
@@ -279,9 +279,9 @@ class _NumberPadDialogState extends State<NumberPadDialog> {
                 ),
               ),
             ),
-            
+
             SizedBox(height: 20.h),
-            
+
             // Number Pad
             GridView.builder(
               shrinkWrap: true,
@@ -295,20 +295,31 @@ class _NumberPadDialogState extends State<NumberPadDialog> {
               itemCount: 12,
               itemBuilder: (context, index) {
                 if (index == 9) {
-                  return _buildNumberButton('C', _onClearPressed, isSpecial: true);
+                  return _buildNumberButton(
+                    'C',
+                    _onClearPressed,
+                    isSpecial: true,
+                  );
                 } else if (index == 10) {
                   return _buildNumberButton('0', () => _onNumberPressed('0'));
                 } else if (index == 11) {
-                  return _buildNumberButton('⌫', _onBackspacePressed, isSpecial: true);
+                  return _buildNumberButton(
+                    '⌫',
+                    _onBackspacePressed,
+                    isSpecial: true,
+                  );
                 } else {
                   final number = (index + 1).toString();
-                  return _buildNumberButton(number, () => _onNumberPressed(number));
+                  return _buildNumberButton(
+                    number,
+                    () => _onNumberPressed(number),
+                  );
                 }
               },
             ),
-            
+
             SizedBox(height: 20.h),
-            
+
             // Action Buttons
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -319,7 +330,9 @@ class _NumberPadDialogState extends State<NumberPadDialog> {
                     'Cancel',
                     style: TextStyle(
                       fontSize: 16.sp,
-                      color: Theme.of(context).colorScheme.onError.withOpacity(0.7),
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.onError.withValues(alpha: 0.7),
                     ),
                   ),
                 ),
@@ -328,7 +341,10 @@ class _NumberPadDialogState extends State<NumberPadDialog> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromRGBO(0, 187, 97, 1),
                     foregroundColor: Colors.white,
-                    padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 12.h),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 24.w,
+                      vertical: 12.h,
+                    ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.r),
                     ),
@@ -349,11 +365,15 @@ class _NumberPadDialogState extends State<NumberPadDialog> {
     );
   }
 
-  Widget _buildNumberButton(String text, VoidCallback onPressed, {bool isSpecial = false}) {
+  Widget _buildNumberButton(
+    String text,
+    VoidCallback onPressed, {
+    bool isSpecial = false,
+  }) {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        backgroundColor: isSpecial 
+        backgroundColor: isSpecial
             ? Theme.of(context).colorScheme.secondary
             : Theme.of(context).colorScheme.secondaryContainer,
         foregroundColor: Theme.of(context).colorScheme.onError,
@@ -364,10 +384,7 @@ class _NumberPadDialogState extends State<NumberPadDialog> {
       ),
       child: Text(
         text,
-        style: TextStyle(
-          fontSize: 18.sp,
-          fontWeight: FontWeight.w500,
-        ),
+        style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w500),
       ),
     );
   }

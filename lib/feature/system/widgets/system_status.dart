@@ -222,11 +222,11 @@ class _InfoState extends State<Info> {
               IconButton(
                 iconSize: 28.s,
                 style: ButtonStyle(
-                  shape: MaterialStateProperty.all(const CircleBorder()),
+                  shape: WidgetStateProperty.all(const CircleBorder()),
                   backgroundColor: widget.isPowerOn
-                      ? MaterialStateProperty.all(
+                      ? WidgetStateProperty.all(
                           const Color.fromRGBO(0, 187, 97, 1))
-                      : MaterialStateProperty.all(Colors.grey),
+                      : WidgetStateProperty.all(Colors.grey),
                 ),
                 onPressed: widget.isPowerOn ? widget.decreaseFunction : null,
                 icon: const Icon(
@@ -259,11 +259,11 @@ class _InfoState extends State<Info> {
               IconButton(
                 iconSize: 28.s,
                 style: ButtonStyle(
-                  shape: MaterialStateProperty.all(const CircleBorder()),
+                  shape: WidgetStateProperty.all(const CircleBorder()),
                   backgroundColor: widget.isPowerOn
-                      ? MaterialStateProperty.all(
+                      ? WidgetStateProperty.all(
                           const Color.fromRGBO(0, 187, 97, 1))
-                      : MaterialStateProperty.all(Colors.grey),
+                      : WidgetStateProperty.all(Colors.grey),
                 ),
                 onPressed: widget.isPowerOn ? widget.increaseFunction : null,
                 icon: const Icon(
