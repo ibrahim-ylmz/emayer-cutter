@@ -19,7 +19,7 @@ dependencies:
 
 essential: false
 
-icon: lib/assets/logo/ailogo.png
+icon: assets/splash/img_splash.png
 
 postuninstall_scripts:
   - echo "Sorry to see you go."
