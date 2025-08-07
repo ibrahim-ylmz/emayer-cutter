@@ -68,6 +68,15 @@ activate_fastforge() {
     
     dart pub global activate fastforge
     print_success "Fastforge activated successfully"
+    
+    # Add PATH export to ~/.bashrc if not already present
+    PUB_CACHE_PATH="$HOME/.pub-cache/bin"
+    if ! grep -q "export PATH=.*$PUB_CACHE_PATH" ~/.bashrc; then
+        echo "export PATH="\$PATH:\$HOME/.pub-cache/bin"" >> ~/.bashrc
+        print_success "Added Dart pub cache to PATH in ~/.bashrc"
+    else
+        print_warning "Dart pub cache already in PATH, skipping"
+    fi
 }
 
 # Check and validate existing configuration files
