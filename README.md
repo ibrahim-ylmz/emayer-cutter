@@ -1,9 +1,11 @@
 ## Fastforge Linux Otomasyon Scriptini Çalıştırmak
 
-Fastforge kullanarak Flutter uygulamalarını Linux'ta paketleme ve dağıtma iş akışını otomatikleştirmek için aşağıdaki komutu kullanın:
+Tüm süreci tek seferde otomatikleştirmek için master scripti kullanın:
 
 ```bash
-sh fastforge_linux_automation.sh
+sh setup_and_build.sh
 ```
+
+Bu komut önce Flutter'ı kurar, ardından uygulamanızı paketler ve çalıştırır.
 
 Bu script Flutter 3.32.8, Dart 3.8.1 ve Fastforge 0.6.2 için oluşturulmuştur.
