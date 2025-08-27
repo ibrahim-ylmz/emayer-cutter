@@ -32,7 +32,7 @@ class _SystemInfoState extends State<SystemInfo> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 240.w,
+      width: double.infinity,
       height: double.infinity,
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.primaryContainer,

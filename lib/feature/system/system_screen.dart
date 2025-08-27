@@ -136,43 +136,6 @@ class _SystemScreenState extends State<SystemScreen> with SystemScreenMixin {
                                     bottom: 3.h,
                                   ),
                                   child: SystemButton(
-                                    title: 'Vacuum',
-                                    inactiveIcon: SvgPicture.asset(
-                                      height: 25.s,
-                                      AssetsConfirguration.systemVacuumOff,
-                                    ),
-                                    activeIcon: SvgPicture.asset(
-                                      height: 15.h,
-                                      AssetsConfirguration.systemVacuumOn,
-                                    ),
-                                    value: context
-                                        .watch<SystemNotifier>()
-                                        .isVacuumOn,
-                                    onToggle: context
-                                        .read<SystemNotifier>()
-                                        .sendVacuumOnRequest,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                    left: 12.w,
-                                    right: 12.w,
-                                    bottom: 3.h,
-                                  ),
-                                  child: Divider(
-                                    height: 1,
-                                    color: Theme.of(
-                                      context,
-                                    ).colorScheme.secondary,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                    left: 27.w,
-                                    right: 27.w,
-                                    bottom: 3.h,
-                                  ),
-                                  child: SystemButton(
                                     title: 'Lights',
                                     inactiveIcon: SvgPicture.asset(
                                       height: 25.s,

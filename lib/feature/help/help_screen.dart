@@ -88,7 +88,7 @@ class HelpScreen extends StatelessWidget {
                                 children: [
                                   Expanded(
                                     child: Text(
-                                      'support@loopbot.co',
+                                      'info@emayer.com.tr',
                                       maxLines: 1,
                                       softWrap: true,
                                       overflow: TextOverflow.ellipsis,
