@@ -86,7 +86,6 @@ class _SliceControlState extends State<SliceControl> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               _buildActionButton('Go Center', Icons.center_focus_strong, () {}),
-              _buildActionButton('Camera View', Icons.camera_alt, () {}),
             ],
           ),
         ],
