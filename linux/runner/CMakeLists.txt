@@ -23,4 +23,11 @@ add_definitions(-DAPPLICATION_ID="${APPLICATION_ID}")
 target_link_libraries(${BINARY_NAME} PRIVATE flutter)
 target_link_libraries(${BINARY_NAME} PRIVATE PkgConfig::GTK)
 
+# Link against X11 since we call XInitThreads() in native code.
+find_package(X11 REQUIRED)
+if (X11_FOUND)
+  target_link_libraries(${BINARY_NAME} PRIVATE ${X11_LIBRARIES})
+  target_include_directories(${BINARY_NAME} PRIVATE ${X11_INCLUDE_DIR})
+endif()
+
 target_include_directories(${BINARY_NAME} PRIVATE "${CMAKE_SOURCE_DIR}")

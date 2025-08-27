@@ -3,6 +3,7 @@
 #include <flutter_linux/flutter_linux.h>
 #ifdef GDK_WINDOWING_X11
 #include <gdk/gdkx.h>
+#include <X11/Xlib.h>
 #endif
 
 #include "flutter/generated_plugin_registrant.h"
@@ -86,6 +87,11 @@ static void my_application_startup(GApplication* application) {
   //MyApplication* self = MY_APPLICATION(object);
 
   // Perform any actions required at application startup.
+
+#ifdef GDK_WINDOWING_X11
+  // Ensure Xlib is initialized for multi-threaded access before any GTK/X11 calls.
+  XInitThreads();
+#endif
 
   G_APPLICATION_CLASS(my_application_parent_class)->startup(application);
 }
