@@ -61,12 +61,10 @@ class DrawerUpButton extends StatelessWidget {
                         child: SvgPicture.asset(
                           svgIcon,
                           height: 18.s,
-                          colorFilter: ColorFilter.mode(
-                            isEnable
-                                ? const Color.fromRGBO(23, 23, 23, 1)
-                                : const Color.fromRGBO(209, 209, 209, 1),
-                            BlendMode.srcIn,
-                          ),
+                          // ignore: deprecated_member_use
+                          color: isEnable
+                              ? const Color.fromRGBO(23, 23, 23, 1)
+                              : const Color.fromRGBO(209, 209, 209, 1),
                         ),
                       ),
                     ),

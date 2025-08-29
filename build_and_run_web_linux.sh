@@ -70,16 +70,9 @@ build_web() {
         rm -rf build/web
     fi
     
-    # Opsiyonel: CanvasKit (Skia) ile derleme için bayrak
-    CANVASKIT_FLAG=""
-    if [[ " $* " == *" --canvaskit "* ]]; then
-        log_info "CanvasKit etkin: FLUTTER_WEB_USE_SKIA=true"
-        CANVASKIT_FLAG="--dart-define=FLUTTER_WEB_USE_SKIA=true"
-    fi
-
-    # Release build al (PWA cache kapalı, base-href kök)
-    log_info "Release build alınıyor (flutter build web --release --base-href / --pwa-strategy=none $CANVASKIT_FLAG)..."
-    flutter build web --release --base-href / --pwa-strategy=none $CANVASKIT_FLAG
+    # Release build al
+    log_info "Release build alınıyor (flutter build web --release)..."
+    flutter build web --release
     
     if [ ! -d "build/web" ]; then
         log_error "Web build başarısız! build/web klasörü oluşturulamadı."
@@ -92,7 +85,7 @@ build_web() {
 # Local web server başlat
 start_local_server() {
     log_info "Local web server başlatılıyor..."
-    
+
     # Port kontrolü
     PORT=8080
     while lsof -Pi :$PORT -sTCP:LISTEN -t >/dev/null 2>&1; do
@@ -103,94 +96,87 @@ start_local_server() {
             exit 1
         fi
     done
-    
+
     log_info "Web uygulaması http://localhost:$PORT adresinde başlatılıyor..."
     log_info "Durdurmak için Ctrl+C tuşlarına basın"
-    
+
     cd build/web
 
-    # Node.js 'serve' ile SPA fallback (tercih edilir)
-    if command -v npx &> /dev/null; then
-        if npx --yes serve --version >/dev/null 2>&1; then
-            log_info "npx serve -s ile SPA fallback etkin."
-            npx --yes serve -s -l $PORT .
-            return
-        fi
-    fi
-
-    # Python ile SPA fallback'li basit HTTP server
+    # Python3 ile SVG desteği olan HTTP server başlat (tercih edilen)
     if command -v python3 &> /dev/null; then
-        log_info "Python3 ile SPA fallback'li HTTP server başlıyor..."
-        python3 - <<'PY'
+        log_info "Python3 ile SVG desteği olan HTTP server başlatılıyor..."
+        python3 - <<EOF
 import http.server
 import socketserver
+import mimetypes
 import os
 
-PORT = int(os.environ.get('PORT', '8080'))
+PORT = $PORT
 WEB_DIR = os.getcwd()
 
-class SPARequestHandler(http.server.SimpleHTTPRequestHandler):
-    def translate_path(self, path):
-        # Standart yolu çöz
-        path = super().translate_path(path)
-        return path
+class SVGFriendlyHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
+    def end_headers(self):
+        # SVG dosyaları için MIME type'ını ayarla
+        if self.path.endswith('.svg'):
+            self.send_header('Content-type', 'image/svg+xml')
+        elif self.path.endswith('.woff2'):
+            self.send_header('Content-type', 'font/woff2')
+        elif self.path.endswith('.woff'):
+            self.send_header('Content-type', 'font/woff')
+        elif self.path.endswith('.ttf'):
+            self.send_header('Content-type', 'font/ttf')
+        # CORS header'ı ekle
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+        super().end_headers()
 
-    def send_head(self):
-        path = self.translate_path(self.path)
-        # Dosya varsa normal servis et
-        if os.path.exists(path) and os.path.isfile(path):
-            return http.server.SimpleHTTPRequestHandler.send_head(self)
-        # Yoksa index.html'e düş
-        index_path = os.path.join(WEB_DIR, 'index.html')
-        if os.path.exists(index_path):
-            self.path = '/index.html'
-            return http.server.SimpleHTTPRequestHandler.send_head(self)
-        return http.server.SimpleHTTPRequestHandler.send_head(self)
+    def log_message(self, format, *args):
+        # Log mesajlarını bastır (sessiz mod)
+        pass
 
-with socketserver.TCPServer(('', PORT), SPARequestHandler) as httpd:
-    print(f"Serving SPA at http://localhost:{PORT}")
+with socketserver.TCPServer(('', PORT), SVGFriendlyHTTPRequestHandler) as httpd:
+    print("SVG desteği ile HTTP server http://localhost:$PORT adresinde çalışıyor...")
+    print("Durdurmak için Ctrl+C tuşlarına basın")
     try:
         httpd.serve_forever()
-    except BrokenPipeError:
-        pass
-PY
-        return
-    elif command -v python &> /dev/null; then
-        log_info "Python2/3 ile SPA fallback denemesi..."
-        python - <<'PY' 2>/dev/null || python - <<'PY'
-import SimpleHTTPServer as server, SocketServer as socketserver, os
-PORT=int(os.environ.get('PORT','8080'))
-WEB_DIR=os.getcwd()
-class SPA(server.SimpleHTTPRequestHandler):
-    def send_head(self):
-        path = self.translate_path(self.path)
-        if os.path.exists(path) and os.path.isfile(path):
-            return server.SimpleHTTPRequestHandler.send_head(self)
-        index_path = os.path.join(WEB_DIR, 'index.html')
-        if os.path.exists(index_path):
-            self.path = '/index.html'
-            return server.SimpleHTTPRequestHandler.send_head(self)
-        return server.SimpleHTTPRequestHandler.send_head(self)
-httpd=socketserver.TCPServer(('',PORT),SPA)
-print('Serving SPA at http://localhost:%d' % PORT)
-httpd.serve_forever()
-PY
-PY
+    except KeyboardInterrupt:
+        print("\nServer durduruluyor...")
+        httpd.shutdown()
+EOF
         return
     fi
 
-    # PHP ile basit HTTP server (SPA fallback sağlanamaz)
+    # Node.js ile http-server başlat (SVG desteği ile)
+    if command -v npx &> /dev/null; then
+        log_info "Node.js http-server ile SVG desteği olan server başlatılıyor..."
+        npx http-server -p $PORT --cors -s -c-1 2>/dev/null || {
+            log_warning "npx http-server başarısız, alternatif deneniyor..."
+        }
+        return
+    fi
+
+    # Python2/3 ile basit HTTP server başlat (fallback)
+    if command -v python &> /dev/null; then
+        log_info "Python ile temel HTTP server başlatılıyor..."
+        python -m SimpleHTTPServer $PORT 2>/dev/null || python -m http.server $PORT
+        return
+    fi
+
+    # PHP ile HTTP server başlat (fallback)
     if command -v php &> /dev/null; then
-        log_info "PHP ile HTTP server başlıyor (SPA fallback yok)."
+        log_info "PHP ile HTTP server başlatılıyor..."
         php -S localhost:$PORT
         return
     fi
 
-    log_error "Hiçbir uygun HTTP server bulunamadı!"
+    log_error "Hiçbir HTTP server bulunamadı!"
     log_info "Lütfen aşağıdakilerden birini yükleyin:"
-    log_info "- Node.js: sudo apt install nodejs npm (önerilen: 'npx serve -s')"
-    log_info "- Python3: sudo apt install python3"
+    log_info "- Python3: sudo apt install python3 (önerilen)"
+    log_info "- Node.js: sudo apt install nodejs npm"
     log_info "- PHP: sudo apt install php"
+    log_info ""
+    log_info "Veya manuel olarak build/web klasörünü bir web server ile çalıştırın."
     exit 1
 }
 
