@@ -70,9 +70,9 @@ build_web() {
         rm -rf build/web
     fi
     
-    # Release build al
-    log_info "Release build alınıyor (flutter build web --release)..."
-    flutter build web --release
+    # Release build al (PWA servis worker kapalı ve kök path için base-href ayarlı)
+    log_info "Release build alınıyor (flutter build web --release --base-href / --pwa-strategy=none)..."
+    flutter build web --release --base-href / --pwa-strategy=none
     
     if [ ! -d "build/web" ]; then
         log_error "Web build başarısız! build/web klasörü oluşturulamadı."
