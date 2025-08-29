@@ -71,8 +71,15 @@ build_web() {
     fi
     
     # Release build al
-    log_info "Release build alınıyor (flutter build web --release --web-renderer canvaskit)..."
-    flutter build web --release --web-renderer canvaskit
+    # Mevcut Flutter sürümünün --web-renderer desteği var mı kontrol et
+    if flutter build web -h | grep -q "--web-renderer"; then
+        log_info "Release build alınıyor (flutter build web --release --web-renderer canvaskit)..."
+        flutter build web --release --web-renderer canvaskit
+    else
+        log_warning "Flutter sürümünüz --web-renderer seçeneğini desteklemiyor. Eski CanvasKit bayrağı ile derlenecek (FLUTTER_WEB_USE_SKIA=true)."
+        log_info "Release build alınıyor (flutter build web --release --dart-define=FLUTTER_WEB_USE_SKIA=true)..."
+        flutter build web --release --dart-define=FLUTTER_WEB_USE_SKIA=true
+    fi
     
     if [ ! -d "build/web" ]; then
         log_error "Web build başarısız! build/web klasörü oluşturulamadı."
