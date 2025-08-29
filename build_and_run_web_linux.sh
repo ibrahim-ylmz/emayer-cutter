@@ -29,45 +29,9 @@ log_error() {
     echo -e "${RED}[ERROR]${NC} $1"
 }
 
-# Sistem kontrolü
-check_system() {
-    log_info "Sistem kontrolü yapılıyor..."
-    
-    # Linux kontrolü
-    if [[ "$OSTYPE" != "linux-gnu"* ]]; then
-        log_error "Bu script sadece Linux sistemlerde çalışır!"
-        exit 1
-    fi
-    
-    # x86_64 mimari kontrolü
-    if [[ "$(uname -m)" != "x86_64" ]]; then
-        log_error "Bu script sadece x86_64 mimaride çalışır!"
-        exit 1
-    fi
-    
-    log_success "Sistem uyumlu: Linux x86_64"
-}
+ 
 
-# Flutter kontrolü
-check_flutter() {
-    log_info "Flutter kontrolü yapılıyor..."
-    
-    if ! command -v flutter &> /dev/null; then
-        log_error "Flutter bulunamadı! Lütfen Flutter'ı yükleyin."
-        log_info "Flutter yüklemek için: https://flutter.dev/docs/get-started/install/linux"
-        exit 1
-    fi
-    
-    # Flutter versiyon kontrolü
-    FLUTTER_VERSION=$(flutter --version | head -n 1)
-    log_success "Flutter bulundu: $FLUTTER_VERSION"
-    
-    # Flutter doctor kontrolü
-    log_info "Flutter doctor çalıştırılıyor..."
-    if ! flutter doctor --android-licenses &> /dev/null; then
-        log_warning "Flutter doctor'da bazı uyarılar olabilir, devam ediliyor..."
-    fi
-}
+ 
 
 # Web desteği kontrolü
 check_web_support() {
@@ -177,12 +141,6 @@ main() {
         log_error "pubspec.yaml bulunamadı! Lütfen Flutter proje dizininde çalıştırın."
         exit 1
     fi
-    
-    # Sistem kontrolü
-    check_system
-    
-    # Flutter kontrolü
-    check_flutter
     
     # Web desteği kontrolü
     check_web_support
