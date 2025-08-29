@@ -70,9 +70,16 @@ build_web() {
         rm -rf build/web
     fi
     
-    # Release build al (SVG ve asset sorunları için önerilen bayraklarla)
-    log_info "Release build alınıyor (flutter build web --release --base-href / --pwa-strategy=none --web-renderer canvaskit)..."
-    flutter build web --release --base-href / --pwa-strategy=none --web-renderer canvaskit
+    # Opsiyonel: CanvasKit (Skia) ile derleme için bayrak
+    CANVASKIT_FLAG=""
+    if [[ " $* " == *" --canvaskit "* ]]; then
+        log_info "CanvasKit etkin: FLUTTER_WEB_USE_SKIA=true"
+        CANVASKIT_FLAG="--dart-define=FLUTTER_WEB_USE_SKIA=true"
+    fi
+
+    # Release build al (PWA cache kapalı, base-href kök)
+    log_info "Release build alınıyor (flutter build web --release --base-href / --pwa-strategy=none $CANVASKIT_FLAG)..."
+    flutter build web --release --base-href / --pwa-strategy=none $CANVASKIT_FLAG
     
     if [ ! -d "build/web" ]; then
         log_error "Web build başarısız! build/web klasörü oluşturulamadı."
