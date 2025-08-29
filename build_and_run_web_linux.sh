@@ -71,8 +71,8 @@ build_web() {
     fi
     
     # Release build al
-    log_info "Release build alınıyor (flutter build web --release)..."
-    flutter build web --release
+    log_info "Release build alınıyor (flutter build web --release --web-renderer canvaskit)..."
+    flutter build web --release --web-renderer canvaskit
     
     if [ ! -d "build/web" ]; then
         log_error "Web build başarısız! build/web klasörü oluşturulamadı."
@@ -85,7 +85,7 @@ build_web() {
 # Local web server başlat
 start_local_server() {
     log_info "Local web server başlatılıyor..."
-
+    
     # Port kontrolü
     PORT=8080
     while lsof -Pi :$PORT -sTCP:LISTEN -t >/dev/null 2>&1; do
@@ -96,88 +96,36 @@ start_local_server() {
             exit 1
         fi
     done
-
+    
     log_info "Web uygulaması http://localhost:$PORT adresinde başlatılıyor..."
     log_info "Durdurmak için Ctrl+C tuşlarına basın"
-
-    cd build/web
-
-    # Python3 ile SVG desteği olan HTTP server başlat (tercih edilen)
+    
+    # Python3 ile basit HTTP server başlat (eğer varsa)
     if command -v python3 &> /dev/null; then
-        log_info "Python3 ile SVG desteği olan HTTP server başlatılıyor..."
-        python3 - <<EOF
-import http.server
-import socketserver
-import mimetypes
-import os
-
-PORT = $PORT
-WEB_DIR = os.getcwd()
-
-class SVGFriendlyHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
-    def end_headers(self):
-        # SVG dosyaları için MIME type'ını ayarla
-        if self.path.endswith('.svg'):
-            self.send_header('Content-type', 'image/svg+xml')
-        elif self.path.endswith('.woff2'):
-            self.send_header('Content-type', 'font/woff2')
-        elif self.path.endswith('.woff'):
-            self.send_header('Content-type', 'font/woff')
-        elif self.path.endswith('.ttf'):
-            self.send_header('Content-type', 'font/ttf')
-        # CORS header'ı ekle
-        self.send_header('Access-Control-Allow-Origin', '*')
-        self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
-        self.send_header('Access-Control-Allow-Headers', 'Content-Type')
-        super().end_headers()
-
-    def log_message(self, format, *args):
-        # Log mesajlarını bastır (sessiz mod)
-        pass
-
-with socketserver.TCPServer(('', PORT), SVGFriendlyHTTPRequestHandler) as httpd:
-    print("SVG desteği ile HTTP server http://localhost:$PORT adresinde çalışıyor...")
-    print("Durdurmak için Ctrl+C tuşlarına basın")
-    try:
-        httpd.serve_forever()
-    except KeyboardInterrupt:
-        print("\nServer durduruluyor...")
-        httpd.shutdown()
-EOF
-        return
-    fi
-
-    # Node.js ile http-server başlat (SVG desteği ile)
-    if command -v npx &> /dev/null; then
-        log_info "Node.js http-server ile SVG desteği olan server başlatılıyor..."
-        npx http-server -p $PORT --cors -s -c-1 2>/dev/null || {
-            log_warning "npx http-server başarısız, alternatif deneniyor..."
-        }
-        return
-    fi
-
-    # Python2/3 ile basit HTTP server başlat (fallback)
-    if command -v python &> /dev/null; then
-        log_info "Python ile temel HTTP server başlatılıyor..."
+        cd build/web
+        python3 -m http.server $PORT
+    # Python ile basit HTTP server başlat (eğer varsa)
+    elif command -v python &> /dev/null; then
+        cd build/web
         python -m SimpleHTTPServer $PORT 2>/dev/null || python -m http.server $PORT
-        return
-    fi
-
-    # PHP ile HTTP server başlat (fallback)
-    if command -v php &> /dev/null; then
-        log_info "PHP ile HTTP server başlatılıyor..."
+    # Node.js ile basit HTTP server başlat (eğer varsa)
+    elif command -v npx &> /dev/null; then
+        cd build/web
+        npx http-server -p $PORT
+    # PHP ile basit HTTP server başlat (eğer varsa)
+    elif command -v php &> /dev/null; then
+        cd build/web
         php -S localhost:$PORT
-        return
+    else
+        log_error "Hiçbir HTTP server bulunamadı!"
+        log_info "Lütfen aşağıdakilerden birini yükleyin:"
+        log_info "- Python3: sudo apt install python3"
+        log_info "- Node.js: sudo apt install nodejs npm"
+        log_info "- PHP: sudo apt install php"
+        log_info ""
+        log_info "Veya manuel olarak build/web klasörünü bir web server ile çalıştırın."
+        exit 1
     fi
-
-    log_error "Hiçbir HTTP server bulunamadı!"
-    log_info "Lütfen aşağıdakilerden birini yükleyin:"
-    log_info "- Python3: sudo apt install python3 (önerilen)"
-    log_info "- Node.js: sudo apt install nodejs npm"
-    log_info "- PHP: sudo apt install php"
-    log_info ""
-    log_info "Veya manuel olarak build/web klasörünü bir web server ile çalıştırın."
-    exit 1
 }
 
 # Ana fonksiyon
