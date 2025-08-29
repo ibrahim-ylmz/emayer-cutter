@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:emayer_cutter/core/design/size_extensions.dart';
 
@@ -35,13 +34,7 @@ class _DrawerEndButtonState extends State<DrawerEndButton> {
                 children: [
                   SvgPicture.asset(
                     widget.svgIcon ?? "Null",
-                    height: kIsWeb ? 24.0 : 18.s,
-                    width: kIsWeb ? 24.0 : null,
-                    fit: BoxFit.contain,
-                    colorFilter: const ColorFilter.mode(
-                      Color.fromRGBO(255, 255, 255, 0.8),
-                      BlendMode.srcIn,
-                    ),
+                    height: 18.s,
                   ),
                   buttonWidth > 180.w
                       ? Padding(
@@ -64,4 +57,3 @@ class _DrawerEndButtonState extends State<DrawerEndButton> {
     );
   }
 }
-

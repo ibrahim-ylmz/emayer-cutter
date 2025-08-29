@@ -94,10 +94,6 @@ class _TopBarState extends State<TopBar> {
                     AssetsConfirguration.systemLightOff,
                     height: 20.s,
                     width: 20.s,
-                    colorFilter: const ColorFilter.mode(
-                      Colors.white,
-                      BlendMode.srcIn,
-                    ),
                   ),
                   value: themeChanger.isLightMode,
                   onToggle: (val) {
