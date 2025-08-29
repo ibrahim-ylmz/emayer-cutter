@@ -107,32 +107,91 @@ start_local_server() {
     log_info "Web uygulaması http://localhost:$PORT adresinde başlatılıyor..."
     log_info "Durdurmak için Ctrl+C tuşlarına basın"
     
-    # Python3 ile basit HTTP server başlat (eğer varsa)
-    if command -v python3 &> /dev/null; then
-        cd build/web
-        python3 -m http.server $PORT
-    # Python ile basit HTTP server başlat (eğer varsa)
-    elif command -v python &> /dev/null; then
-        cd build/web
-        python -m SimpleHTTPServer $PORT 2>/dev/null || python -m http.server $PORT
-    # Node.js ile basit HTTP server başlat (eğer varsa)
-    elif command -v npx &> /dev/null; then
-        cd build/web
-        npx http-server -p $PORT
-    # PHP ile basit HTTP server başlat (eğer varsa)
-    elif command -v php &> /dev/null; then
-        cd build/web
-        php -S localhost:$PORT
-    else
-        log_error "Hiçbir HTTP server bulunamadı!"
-        log_info "Lütfen aşağıdakilerden birini yükleyin:"
-        log_info "- Python3: sudo apt install python3"
-        log_info "- Node.js: sudo apt install nodejs npm"
-        log_info "- PHP: sudo apt install php"
-        log_info ""
-        log_info "Veya manuel olarak build/web klasörünü bir web server ile çalıştırın."
-        exit 1
+    cd build/web
+
+    # Node.js 'serve' ile SPA fallback (tercih edilir)
+    if command -v npx &> /dev/null; then
+        if npx --yes serve --version >/dev/null 2>&1; then
+            log_info "npx serve -s ile SPA fallback etkin."
+            npx --yes serve -s -l $PORT .
+            return
+        fi
     fi
+
+    # Python ile SPA fallback'li basit HTTP server
+    if command -v python3 &> /dev/null; then
+        log_info "Python3 ile SPA fallback'li HTTP server başlıyor..."
+        python3 - <<'PY'
+import http.server
+import socketserver
+import os
+
+PORT = int(os.environ.get('PORT', '8080'))
+WEB_DIR = os.getcwd()
+
+class SPARequestHandler(http.server.SimpleHTTPRequestHandler):
+    def translate_path(self, path):
+        # Standart yolu çöz
+        path = super().translate_path(path)
+        return path
+
+    def send_head(self):
+        path = self.translate_path(self.path)
+        # Dosya varsa normal servis et
+        if os.path.exists(path) and os.path.isfile(path):
+            return http.server.SimpleHTTPRequestHandler.send_head(self)
+        # Yoksa index.html'e düş
+        index_path = os.path.join(WEB_DIR, 'index.html')
+        if os.path.exists(index_path):
+            self.path = '/index.html'
+            return http.server.SimpleHTTPRequestHandler.send_head(self)
+        return http.server.SimpleHTTPRequestHandler.send_head(self)
+
+with socketserver.TCPServer(('', PORT), SPARequestHandler) as httpd:
+    print(f"Serving SPA at http://localhost:{PORT}")
+    try:
+        httpd.serve_forever()
+    except BrokenPipeError:
+        pass
+PY
+        return
+    elif command -v python &> /dev/null; then
+        log_info "Python2/3 ile SPA fallback denemesi..."
+        python - <<'PY' 2>/dev/null || python - <<'PY'
+import SimpleHTTPServer as server, SocketServer as socketserver, os
+PORT=int(os.environ.get('PORT','8080'))
+WEB_DIR=os.getcwd()
+class SPA(server.SimpleHTTPRequestHandler):
+    def send_head(self):
+        path = self.translate_path(self.path)
+        if os.path.exists(path) and os.path.isfile(path):
+            return server.SimpleHTTPRequestHandler.send_head(self)
+        index_path = os.path.join(WEB_DIR, 'index.html')
+        if os.path.exists(index_path):
+            self.path = '/index.html'
+            return server.SimpleHTTPRequestHandler.send_head(self)
+        return server.SimpleHTTPRequestHandler.send_head(self)
+httpd=socketserver.TCPServer(('',PORT),SPA)
+print('Serving SPA at http://localhost:%d' % PORT)
+httpd.serve_forever()
+PY
+PY
+        return
+    fi
+
+    # PHP ile basit HTTP server (SPA fallback sağlanamaz)
+    if command -v php &> /dev/null; then
+        log_info "PHP ile HTTP server başlıyor (SPA fallback yok)."
+        php -S localhost:$PORT
+        return
+    fi
+
+    log_error "Hiçbir uygun HTTP server bulunamadı!"
+    log_info "Lütfen aşağıdakilerden birini yükleyin:"
+    log_info "- Node.js: sudo apt install nodejs npm (önerilen: 'npx serve -s')"
+    log_info "- Python3: sudo apt install python3"
+    log_info "- PHP: sudo apt install php"
+    exit 1
 }
 
 # Ana fonksiyon
