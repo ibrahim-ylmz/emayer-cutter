@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:emayer_cutter/core/design/size_extensions.dart';
@@ -32,7 +33,11 @@ class _DrawerEndButtonState extends State<DrawerEndButton> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  SvgPicture.asset(
+                  kIsWeb ? Image.asset(
+                    widget.svgIcon ?? "Null",
+                    height: 18.s,
+                    color: const Color.fromRGBO(255, 255, 255, 0.8),
+                  ) : SvgPicture.asset(
                     widget.svgIcon ?? "Null",
                     height: 18.s,
                     colorFilter: const ColorFilter.mode(

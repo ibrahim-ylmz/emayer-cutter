@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:emayer_cutter/core/design/size_extensions.dart';
@@ -58,10 +59,16 @@ class DrawerUpButton extends StatelessWidget {
                             : null,
                       ),
                       child: Center(
-                        child: SvgPicture.asset(
+                        child: kIsWeb ? Image.asset(
                           svgIcon,
                           height: 18.s,
-                      
+                          color: isEnable
+                              ? const Color.fromRGBO(23, 23, 23, 1)
+                              : const Color.fromRGBO(209, 209, 209, 1),
+                        ) :
+                        SvgPicture.asset(
+                          svgIcon,
+                          height: 18.s,    
                           colorFilter: ColorFilter.mode(
                             isEnable
                                 ? const Color.fromRGBO(23, 23, 23, 1)

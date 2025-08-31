@@ -6,6 +6,7 @@ import 'package:emayer_cutter/feature/system/widgets/system_button.dart';
 import 'package:emayer_cutter/feature/system/widgets/system_info.dart';
 import 'package:emayer_cutter/feature/system/widgets/system_status.dart';
 import 'package:emayer_cutter/feature/system/widgets/slice_control.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -137,7 +138,12 @@ class _SystemScreenState extends State<SystemScreen> with SystemScreenMixin {
                                   ),
                                   child: SystemButton(
                                     title: 'Lights',
-                                    inactiveIcon: SvgPicture.asset(
+                                    inactiveIcon: 
+                                    kIsWeb ? Image.asset(
+                                      AssetsConfirguration.systemLightOff1,
+                                      height: 25.s,
+                                    ):
+                                    SvgPicture.asset(
                                       height: 25.s,
                                       AssetsConfirguration.systemLightOff,
                                     ),

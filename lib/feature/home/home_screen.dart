@@ -10,6 +10,7 @@ import 'package:emayer_cutter/feature/home/widgets/drawer_up_button.dart';
 import 'package:emayer_cutter/feature/home/widgets/top_bar.dart';
 import 'package:emayer_cutter/feature/lock/lock_screen.dart';
 import 'package:emayer_cutter/feature/stream/stream_notifier.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -86,7 +87,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       DrawerUpButton(
                         title: 'System',
-                        svgIcon: AssetsConfirguration.drawerSystem,
+                        svgIcon: kIsWeb ? AssetsConfirguration.drawerSystem1
+                            :AssetsConfirguration.drawerSystem,
                         onPressed: () {
                           context.go(AppRouterName.system);
                         },
@@ -95,7 +97,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       DrawerUpButton(
                         title: 'Streaming',
-                        svgIcon: AssetsConfirguration.drawerStream,
+                        svgIcon: kIsWeb ? AssetsConfirguration.drawerStream1
+                            :
+                        AssetsConfirguration.drawerStream,
                         onPressed: () {
                           context.go(AppRouterName.stream);
                         },
@@ -132,14 +136,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       DrawerEndButton(
                         title: 'Help',
-                        svgIcon: AssetsConfirguration.drawerInfo,
+                        svgIcon: kIsWeb ? AssetsConfirguration.drawerInfo1: AssetsConfirguration.drawerInfo,
                         onPressed: () {
                           appRouter.go(AppRouterName.help);
                         },
                       ),
                       DrawerEndButton(
                         title: 'Lock',
-                        svgIcon: AssetsConfirguration.drawerLock,
+                        svgIcon: kIsWeb ? AssetsConfirguration.drawerLock1: AssetsConfirguration.drawerLock,
                         onPressed: () {
                           LockScreen.show(context);
                         },

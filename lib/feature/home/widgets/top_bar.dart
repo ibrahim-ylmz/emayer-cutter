@@ -6,6 +6,7 @@ import 'package:emayer_cutter/core/navigation/route_title_mapper.dart';
 import 'package:emayer_cutter/core/notifiers/theme_notifier.dart';
 import 'package:emayer_cutter/feature/home/home_notifier.dart';
 import 'package:emayer_cutter/feature/system/widgets/system_button.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
@@ -90,7 +91,13 @@ class _TopBarState extends State<TopBar> {
                   inactiveTextColor: Colors.white,
                   inactiveColor: const Color.fromRGBO(64, 68, 72, 1),
                   inactiveToggleColor: const Color.fromRGBO(23, 23, 23, 1),
-                  inactiveIcon: SvgPicture.asset(
+                  inactiveIcon: 
+                  kIsWeb ? Image.asset(
+                    AssetsConfirguration.systemLightOff1,
+                    height: 20.s,
+                    width: 20.s,
+                  ) :
+                  SvgPicture.asset(
                     AssetsConfirguration.systemLightOff,
                     height: 20.s,
                     width: 20.s,
