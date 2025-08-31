@@ -32,4 +32,11 @@ final class AssetsConfirguration {
   
   //Splash Screen Assets
   static String get splash => 'assets/splash/img_splash.png';
+
+  //New path Assets
+  static String get drawerInfo1 => 'assets/logo/drawer_info.png';
+  static String get drawerLock1 => 'assets/logo/drawer_lock.png';
+  static String get drawerStream1 => 'assets/logo/drawer_stream.png';
+  static String get drawerSystem1 => 'assets/logo/drawer_system.png';
+  static String get systemLightOff1 => 'assets/logo/system_lights_moon.png';
 }
