@@ -35,6 +35,10 @@ class _DrawerEndButtonState extends State<DrawerEndButton> {
                   SvgPicture.asset(
                     widget.svgIcon ?? "Null",
                     height: 18.s,
+                    colorFilter: const ColorFilter.mode(
+                      Color.fromRGBO(255, 255, 255, 0.8),
+                      BlendMode.srcIn,
+                    ),
                   ),
                   buttonWidth > 180.w
                       ? Padding(
